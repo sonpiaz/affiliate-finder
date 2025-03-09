@@ -2,7 +2,7 @@
 
 Affiliate Finder là ứng dụng web giúp người dùng tìm kiếm và so sánh các chương trình tiếp thị liên kết (affiliate) tốt nhất theo danh mục. Ứng dụng cho phép lọc, sắp xếp và tùy chỉnh hiển thị dữ liệu để tìm các chương trình phù hợp nhất.
 
-![Affiliate Finder Screenshot](screenshot.png)
+<!-- Screenshot sẽ được thêm sau khi đẩy lên GitHub -->
 
 ## Tính năng
 
