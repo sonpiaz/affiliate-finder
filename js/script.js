@@ -1530,7 +1530,7 @@ function setupColumnFilter() {
         columnsModal.classList.remove('show');
     });
     
-    // Đóng modal khi click bên ngoài
+    // Đóng modal khi click ra ngoài
     columnsModal.addEventListener('click', function(e) {
         if (e.target === columnsModal) {
             columnsModal.classList.remove('show');
@@ -1552,33 +1552,45 @@ function setupColumnFilter() {
         // Áp dụng bộ lọc
         applyColumnFilters(columns);
         
-        // Đóng modal
+        // Show a success message
+        showFilterAppliedToast();
+        
+        // Close modal
         columnsModal.classList.remove('show');
     });
     
     // Reset bộ lọc
     resetBtn.addEventListener('click', function() {
-        // Reset tất cả checkbox
-        document.querySelectorAll('.column-option input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = true;
-        });
-        
-        // Reset bộ lọc trong localStorage
-        const columns = {
+        // Thiết lập cài đặt mặc định
+        const defaultPreferences = {
             rank: true,
             program: true,
             commission: true,
-            payout: true,
+            payout: false,      // Mặc định ẩn Payout Time
             established: true,
             traffic: true,
-            payment: true,
-            category: true
+            payment: false,     // Mặc định ẩn Payment Methods 
+            category: false,    // Mặc định ẩn Category
+            action: true
         };
         
-        localStorage.setItem('columnPreferences', JSON.stringify(columns));
+        // Reset checkbox states to default
+        document.querySelectorAll('.column-option input').forEach(option => {
+            const columnName = option.getAttribute('data-column');
+            option.checked = defaultPreferences[columnName];
+        });
         
-        // Áp dụng bộ lọc
-        applyColumnFilters(columns);
+        // Save to localStorage
+        localStorage.setItem('columnPreferences', JSON.stringify(defaultPreferences));
+        
+        // Apply filters
+        applyColumnFilters(defaultPreferences);
+        
+        // Show a reset message
+        showFilterResetToast();
+        
+        // Close modal
+        columnsModal.classList.remove('show');
     });
 }
 
@@ -2044,23 +2056,43 @@ function initTooltips() {
     });
 }
 
+// Cập nhật hàm loadColumnPreferences
 function loadColumnPreferences() {
     const savedPreferences = localStorage.getItem('columnPreferences');
     
+    // Thiết lập mặc định - các cột cơ bản hiển thị, các cột Payout Time, Payment Methods và Category ẩn
+    const defaultPreferences = {
+        rank: true,
+        program: true,
+        commission: true,
+        payout: false,      // Mặc định ẩn Payout Time
+        established: true,
+        traffic: true,
+        payment: false,     // Mặc định ẩn Payment Methods 
+        category: false,    // Mặc định ẩn Category
+        action: true
+    };
+    
+    let columns;
+    
     if (savedPreferences) {
-        const columns = JSON.parse(savedPreferences);
-        
-        // Update checkboxes in modal
-        document.querySelectorAll('.column-option input').forEach(option => {
-            const columnName = option.getAttribute('data-column');
-            if (columns[columnName] !== undefined) {
-                option.checked = columns[columnName];
-            }
-        });
-        
-        // Apply saved filters
-        applyColumnFilters(columns);
+        columns = JSON.parse(savedPreferences);
+    } else {
+        columns = defaultPreferences;
+        // Lưu preferences mặc định
+        localStorage.setItem('columnPreferences', JSON.stringify(defaultPreferences));
     }
+    
+    // Cập nhật trạng thái checkbox trong modal
+    document.querySelectorAll('.column-option input').forEach(option => {
+        const columnName = option.getAttribute('data-column');
+        if (columns[columnName] !== undefined) {
+            option.checked = columns[columnName];
+        }
+    });
+    
+    // Áp dụng preferences
+    applyColumnFilters(columns);
 }
 
 function showFilterAppliedToast() {
