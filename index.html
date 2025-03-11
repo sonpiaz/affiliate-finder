@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate Finder - Best Affiliate Programs</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="light-theme">
+    <header>
+        <div class="logo">
+            <h1>AffiliateHub</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li>
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search programs...">
+                        <button class="search-btn">Search</button>
+                        <div class="search-results" id="search-results"></div>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Categories <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#" data-category="all">All Products</a>
+                        <a href="#" data-category="crypto-exchange">CEX</a>
+                        <a href="#" data-category="ai-video">AI Video</a>
+                        <a href="#" data-category="ai-seo">AI SEO</a>
+                        <a href="#" data-category="ai-productivity">AI Productivity</a>
+                        <a href="#" data-category="ai-agents">AI Agents</a>
+                    </div>
+                </li>
+                <li><a href="#">Login</a></li>
+            </ul>
+        </nav>
+        <div class="theme-toggle">
+            <button id="theme-toggle-btn">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <h2>Top Affiliate Programs by Category</h2>
+            <p>AffiliateHub ranks and scores affiliate programs based on commission rates, payment reliability, cookie duration, and user reviews. <a href="#" class="read-more">Read More</a></p>
+        </section>
+
+        <section class="category-tabs">
+            <div class="tabs">
+                <button class="tab-btn active" data-category="all">All Products</button>
+                <button class="tab-btn" data-category="crypto-exchange">CEX</button>
+                <button class="tab-btn" data-category="ai-video">AI Video</button>
+                <button class="tab-btn" data-category="ai-seo">AI SEO</button>
+                <button class="tab-btn" data-category="ai-productivity">AI Productivity</button>
+                <button class="tab-btn" data-category="ai-agents">AI Agents</button>
+            </div>
+        </section>
+        
+        <div class="table-controls">
+            <button id="customize-columns-btn" class="control-btn">
+                <i class="fas fa-sliders-h"></i> Customize Columns
+            </button>
+        </div>
+
+        <section class="affiliate-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="rank-col" data-column="rank">#</th>
+                        <th data-column="program">Program</th>
+                        <th class="sortable" data-sort="commission" data-column="commission">
+                            Commission
+                            <span class="sort-icons">
+                                <i class="fas fa-sort-up sort-icon" data-order="asc"></i>
+                                <i class="fas fa-sort-down sort-icon" data-order="desc"></i>
+                            </span>
+                        </th>
+                        <th data-column="payout">Payout Time</th>
+                        <th class="sortable" data-sort="established" data-column="established">
+                            Established
+                            <span class="sort-icons">
+                                <i class="fas fa-sort-up sort-icon" data-order="asc"></i>
+                                <i class="fas fa-sort-down sort-icon" data-order="desc"></i>
+                            </span>
+                        </th>
+                        <th class="sortable" data-sort="traffic" data-column="traffic">
+                            Monthly Traffic
+                            <span class="sort-icons">
+                                <i class="fas fa-sort-up sort-icon" data-order="asc"></i>
+                                <i class="fas fa-sort-down sort-icon" data-order="desc"></i>
+                            </span>
+                        </th>
+                        <th data-column="payment">Payment Methods</th>
+                        <th class="sortable" data-sort="category" data-column="category">
+                            Category
+                            <span class="sort-icons">
+                                <i class="fas fa-sort-up sort-icon" data-order="asc"></i>
+                                <i class="fas fa-sort-down sort-icon" data-order="desc"></i>
+                            </span>
+                        </th>
+                        <th data-column="action">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Affiliate Finder. All rights reserved.</p>
+    </footer>
+    
+    <!-- Column Filter Modal -->
+    <div id="columns-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Customize Columns</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="column-option">
+                    <input type="checkbox" id="col-rank" data-column="rank" checked>
+                    <label for="col-rank">Rank (#)</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-program" data-column="program" checked>
+                    <label for="col-program">Program</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-commission" data-column="commission" checked>
+                    <label for="col-commission">Commission</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-payout" data-column="payout">
+                    <label for="col-payout">Payout Time</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-established" data-column="established" checked>
+                    <label for="col-established">Established</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-traffic" data-column="traffic" checked>
+                    <label for="col-traffic">Monthly Traffic</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-payment" data-column="payment">
+                    <label for="col-payment">Payment Methods</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-category" data-column="category">
+                    <label for="col-category">Category</label>
+                </div>
+                <div class="column-option">
+                    <input type="checkbox" id="col-action" data-column="action" checked>
+                    <label for="col-action">Action</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="primary-btn">Apply</button>
+                <button class="secondary-btn">Reset</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- AI Chat Bot -->
+    <div class="ai-chat-container">
+        <div class="ai-chat-toggle">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="ai-chat-box hidden">
+            <div class="ai-chat-header">
+                <div class="ai-chat-title">AffiliateGPT</div>
+                <div class="ai-chat-actions">
+                    <button class="ai-action-btn ai-minimize"><i class="fas fa-minus"></i></button>
+                    <button class="ai-action-btn ai-close"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="ai-chat-messages">
+                <div class="ai-message">
+                    <div class="ai-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-message-content">
+                        <p>Hi there! I'm AffiliateGPT, your AI assistant for finding the best affiliate programs.</p>
+                        <p>How can I help you today?</p>
+                    </div>
+                </div>
+                <div class="ai-quick-replies">
+                    <button class="ai-quick-reply">What are the best crypto exchange affiliate programs?</button>
+                    <button class="ai-quick-reply">Which AI tool has the highest commission rate?</button>
+                    <button class="ai-quick-reply">Compare AI SEO program payment methods</button>
+                </div>
+            </div>
+            <div class="ai-chat-input">
+                <input type="text" placeholder="Type your question here...">
+                <button class="ai-send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html> 
