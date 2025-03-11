@@ -1,0 +1,413 @@
+<script src="language.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // User login state (for demo purposes)
+    let isLoggedIn = false;
+    
+    // DOM Elements
+    const userStatus = document.getElementById('userStatus');
+    const userLoginToggle = document.getElementById('userLoginToggle');
+    const viewMoreSocialBtn = document.getElementById('viewMoreSocialBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const hiddenContent = document.getElementById('hiddenContent');
+    
+    // Trending Topics display selector
+    const trendDisplaySelect = document.getElementById('trendDisplaySelect');
+    
+    // Đảm bảo tất cả các container tồn tại
+    const containers = {
+      'tags': document.getElementById('tagsView'),
+      'wordcloud': document.getElementById('wordcloudView'),
+      'timeline': document.getElementById('timelineView'),
+      'bubbles': document.getElementById('bubblesView'),
+      'heatmap': document.getElementById('heatmapView')
+    };
+    
+    // Ẩn tất cả các view với hiệu ứng mượt mà
+    function hideAllViews() {
+      for (const type in containers) {
+        if (containers[type]) {
+          // Thêm class hidden để kích hoạt hiệu ứng
+          containers[type].classList.add('hidden');
+          setTimeout(() => {
+            containers[type].style.display = 'none';
+            containers[type].classList.remove('hidden');
+          }, 300); // Thời gian trễ khớp với thời gian transition trong CSS
+        }
+      }
+    }
+    
+    // Hiển thị view được chọn với hiệu ứng mượt mà
+    function showView(viewType) {
+      if (containers[viewType]) {
+        // Đặt display thành block trước, sau đó loại bỏ lớp hidden sau một tick
+        containers[viewType].style.display = 'block';
+        containers[viewType].classList.add('hidden');
+        setTimeout(() => {
+          containers[viewType].classList.remove('hidden');
+        }, 10);
+      }
+    }
+    
+    // Chuyển đổi giữa các view với hiệu ứng
+    function switchView(viewType) {
+      // Lưu lại giá trị trong localStorage để duy trì qua các phiên
+      localStorage.setItem('trendingTopicsView', viewType);
+      
+      // Đảm bảo dropdown được chọn đúng
+      if (trendDisplaySelect) {
+        trendDisplaySelect.value = viewType;
+      }
+      
+      // Ẩn view hiện tại
+      hideAllViews();
+      
+      // Hiển thị view mới sau một khoảng thời gian nhỏ để đảm bảo hiệu ứng chuyển đổi mượt mà
+      setTimeout(() => {
+        showView(viewType);
+      }, 310); // Chờ lâu hơn một chút so với thời gian ẩn
+    }
+    
+    // Xử lý sự kiện khi người dùng chọn loại view khác
+    if (trendDisplaySelect) {
+      trendDisplaySelect.addEventListener('change', function() {
+        const selectedView = this.value;
+        switchView(selectedView);
+      });
+    }
+    
+    // Khởi tạo view mặc định hoặc view đã lưu
+    function initTrendingTopicsView() {
+      // Lấy view đã lưu hoặc dùng mặc định 'wordcloud'
+      const savedView = localStorage.getItem('trendingTopicsView') || 'wordcloud';
+      
+      // Ẩn tất cả views (ngay lập tức, không cần hiệu ứng khi khởi tạo)
+      for (const type in containers) {
+        if (containers[type]) {
+          containers[type].style.display = 'none';
+        }
+      }
+      
+      // Hiển thị view đã lưu hoặc mặc định
+      if (containers[savedView]) {
+        containers[savedView].style.display = 'block';
+      } else if (containers['wordcloud']) {
+        // Fallback nếu view đã lưu không tồn tại
+        containers['wordcloud'].style.display = 'block';
+        localStorage.setItem('trendingTopicsView', 'wordcloud');
+      }
+      
+      // Đặt dropdown thành giá trị tương ứng
+      if (trendDisplaySelect) {
+        trendDisplaySelect.value = savedView;
+      }
+    }
+    
+    // Update UI based on login state
+    function updateLoginUI() {
+      const statusText = document.querySelector('.login-status');
+      const avatar = document.querySelector('.user-avatar');
+      
+      if (isLoggedIn) {
+        statusText.textContent = 'User';
+        avatar.textContent = 'U';
+        avatar.style.backgroundColor = '#3861fb';
+        
+        // Show hidden content
+        if (hiddenContent) {
+          hiddenContent.style.display = 'block';
+        }
+        
+        // Change View More button text
+        if (viewMoreSocialBtn) {
+          viewMoreSocialBtn.innerHTML = 'No more content <i class="fas fa-check"></i>';
+          viewMoreSocialBtn.disabled = true;
+          viewMoreSocialBtn.style.opacity = '0.7';
+        }
+      } else {
+        statusText.textContent = 'Guest';
+        avatar.textContent = 'G';
+        avatar.style.backgroundColor = '#F0B90B';
+        
+        // Hide hidden content
+        if (hiddenContent) {
+          hiddenContent.style.display = 'none';
+        }
+        
+        // Reset View More button
+        if (viewMoreSocialBtn) {
+          viewMoreSocialBtn.innerHTML = '<i class="fas fa-plus-circle"></i> View More';
+          viewMoreSocialBtn.disabled = false;
+          viewMoreSocialBtn.style.opacity = '1';
+        }
+      }
+    }
+    
+    // Toggle login state (demo only)
+    const loginToggle = document.getElementById('loginToggle');
+    if (loginToggle) {
+      loginToggle.addEventListener('change', function() {
+        isLoggedIn = this.checked;
+        updateLoginUI();
+      });
+    }
+    
+    // Social Listening Tabs
+    const socialTabs = document.querySelectorAll('.social-tab');
+    socialTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        // Remove active class from all tabs
+        socialTabs.forEach(t => t.classList.remove('active'));
+        
+        // Add active class to clicked tab
+        this.classList.add('active');
+      });
+    });
+    
+    // Thêm tương tác cho các phần tử trong Word Cloud
+    function setupWordCloudInteractions() {
+      const wordElements = document.querySelectorAll('.word-cloud .word');
+      wordElements.forEach(word => {
+        word.addEventListener('click', function() {
+          const text = this.textContent;
+          const growthClass = this.classList.contains('extreme') ? 'extreme' : 
+                             this.classList.contains('high') ? 'high' :
+                             this.classList.contains('medium') ? 'medium' : 'low';
+          
+          // Hiển thị thông tin khi click (có thể hiển thị tooltip hoặc modal)
+          showTopicInfo(text, growthClass);
+        });
+      });
+    }
+    
+    // Thêm tương tác cho các phần tử trong Bubble Chart
+    function setupBubbleInteractions() {
+      const bubbleElements = document.querySelectorAll('.bubble-chart .bubble');
+      bubbleElements.forEach(bubble => {
+        bubble.addEventListener('click', function() {
+          const text = this.querySelector('span').textContent;
+          const growthClass = this.classList.contains('extreme') ? 'extreme' : 
+                             this.classList.contains('high') ? 'high' :
+                             this.classList.contains('medium') ? 'medium' : 'low';
+          
+          showTopicInfo(text, growthClass);
+        });
+      });
+    }
+    
+    // Thêm tương tác cho các phần tử trong Heatmap
+    function setupHeatmapInteractions() {
+      const heatmapCells = document.querySelectorAll('.heatmap-cell');
+      heatmapCells.forEach(cell => {
+        if (cell.firstElementChild) {
+          cell.addEventListener('click', function() {
+            const text = this.querySelector('span').textContent;
+            const growthClass = this.classList.contains('extreme') ? 'extreme' : 
+                               this.classList.contains('high') ? 'high' :
+                               this.classList.contains('medium') ? 'medium' : 'low';
+            
+            showTopicInfo(text, growthClass);
+          });
+        }
+      });
+    }
+    
+    // Hiển thị thông tin về chủ đề khi người dùng click
+    function showTopicInfo(topic, growthClass) {
+      // Định nghĩa mức tăng trưởng dựa trên lớp
+      const growthLevel = {
+        'extreme': 'Tăng trưởng cực cao (>50%)',
+        'high': 'Tăng trưởng cao (30-50%)',
+        'medium': 'Tăng trưởng trung bình (10-30%)',
+        'low': 'Tăng trưởng thấp (<10%)'
+      };
+      
+      // Tạo thông báo với thông tin
+      alert(`Chủ đề: ${topic}\nMức tăng trưởng: ${growthLevel[growthClass]}\n\nClick để xem chi tiết về xu hướng này.`);
+      
+      // Trong ứng dụng thực tế, chúng ta có thể mở modal hoặc trang chi tiết
+    }
+    
+    // Initialize language switcher
+    if (typeof initializeLanguageSwitcher === 'function') {
+      initializeLanguageSwitcher();
+    }
+    
+    // Initial UI update
+    updateLoginUI();
+    
+    // Khởi tạo view cho Trending Topics
+    initTrendingTopicsView();
+    
+    // Thiết lập các tương tác
+    setupWordCloudInteractions();
+    setupBubbleInteractions();
+    setupHeatmapInteractions();
+  });
+</script>
+
+<!-- Thêm phần tooltip cho từ khóa -->
+<style>
+/* Tooltip styles */
+.topic-tooltip {
+  position: absolute;
+  background-color: rgba(33, 37, 41, 0.9);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  z-index: 1000;
+  font-size: 14px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(10px);
+}
+
+.topic-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.topic-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: rgba(33, 37, 41, 0.9) transparent transparent transparent;
+}
+
+.topic-tooltip .topic-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 5px;
+}
+
+.topic-tooltip .topic-growth {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.topic-tooltip .topic-description {
+  font-size: 13px;
+  margin-top: 8px;
+  opacity: 0.9;
+}
+
+.growth-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.growth-indicator.extreme {
+  background-color: #f0b90b;
+}
+
+.growth-indicator.high {
+  background-color: #3861fb;
+}
+
+.growth-indicator.medium {
+  background-color: #00c087;
+}
+
+.growth-indicator.low {
+  background-color: #6c757d;
+}
+</style>
+
+<script>
+// Chức năng tooltip cho các từ khóa
+document.addEventListener('DOMContentLoaded', function() {
+  // Tạo tooltip element
+  const tooltip = document.createElement('div');
+  tooltip.className = 'topic-tooltip';
+  document.body.appendChild(tooltip);
+  
+  // Dữ liệu mẫu cho các từ khóa
+  const topicData = {
+    'Binance referral bonus': {
+      growth: 'extreme',
+      description: 'Chương trình giới thiệu của Binance cho phép người dùng kiếm hoa hồng suốt đời từ người được giới thiệu.'
+    },
+    'passive income': {
+      growth: 'high',
+      description: 'Những chiến lược để tạo thu nhập thụ động từ tiền điện tử thông qua giao dịch, staking và affiliate.'
+    },
+    'crypto trader': {
+      growth: 'medium',
+      description: 'Những người chuyên giao dịch tiền điện tử, thường quan tâm đến các công cụ và nền tảng có phí giao dịch thấp.'
+    },
+    'Binance vs OKX': {
+      growth: 'high',
+      description: 'So sánh giữa hai sàn giao dịch tiền điện tử lớn, tập trung vào phí, tính năng và chương trình tiếp thị liên kết.'
+    }
+  };
+  
+  // Xử lý các từ khóa trong Word Cloud
+  const wordElements = document.querySelectorAll('.word-cloud .word');
+  wordElements.forEach(word => {
+    const text = word.textContent;
+    
+    // Hiển thị tooltip khi hover
+    word.addEventListener('mouseenter', function(e) {
+      const rect = this.getBoundingClientRect();
+      const growthClass = this.classList.contains('extreme') ? 'extreme' : 
+                         this.classList.contains('high') ? 'high' :
+                         this.classList.contains('medium') ? 'medium' : 'low';
+      
+      // Mức tăng trưởng dựa trên lớp
+      const growthLevel = {
+        'extreme': 'Tăng trưởng cực cao (>50%)',
+        'high': 'Tăng trưởng cao (30-50%)',
+        'medium': 'Tăng trưởng trung bình (10-30%)',
+        'low': 'Tăng trưởng thấp (<10%)'
+      };
+      
+      // Dữ liệu cho từ này hoặc dữ liệu mặc định
+      const topicInfo = topicData[text] || {
+        growth: growthClass,
+        description: 'Xu hướng tìm kiếm liên quan đến chương trình affiliate của Binance.'
+      };
+      
+      // Xây dựng nội dung tooltip
+      tooltip.innerHTML = `
+        <div class="topic-title">${text}</div>
+        <div class="topic-growth">
+          <span class="growth-indicator ${growthClass}"></span>
+          <span>${growthLevel[growthClass]}</span>
+        </div>
+        <div class="topic-description">${topicInfo.description}</div>
+      `;
+      
+      // Định vị tooltip
+      tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+      tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+      
+      // Hiển thị tooltip
+      tooltip.classList.add('visible');
+    });
+    
+    // Ẩn tooltip khi không hover
+    word.addEventListener('mouseleave', function() {
+      tooltip.classList.remove('visible');
+    });
+  });
+});
+</script>
+
+/* JS cải tiến mới */
+</body>
+</html> 
