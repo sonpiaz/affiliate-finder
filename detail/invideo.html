@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InVideo Affiliate Program | AI Video Creation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> <span>Back to Programs</span>
+            </a>
+            <div class="user-controls">
+                <div class="language-switcher">
+                    <select id="languageSelect" class="language-select">
+                        <option value="en">English</option>
+                        <option value="vi">Tiếng Việt</option>
+                    </select>
+                </div>
+                <div class="user-status" id="userStatus">
+                    <span class="login-status">Guest</span>
+                    <div class="user-avatar">G</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <header class="program-header">
+            <div class="logo-container">
+                <img src="https://assets.website-files.com/5f204aba8e0f187e7fb85a87/5f212d6e128d71e96b1d1b18_logo.svg" alt="InVideo Logo" class="program-logo">
+            </div>
+            <div class="header-info">
+                <h1>InVideo Affiliate Program</h1>
+                <p class="tagline">Join the AI revolution in video creation and earn up to 30% lifetime commissions</p>
+                <div class="header-cta">
+                    <a href="#" class="primary-btn">Apply Now</a>
+                    <a href="#" class="secondary-btn">View Resources</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="left-column">
+                <section class="program-details">
+                    <h2><i class="fas fa-info-circle"></i> Program Details</h2>
+                    <div class="detail-card">
+                        <p class="detail-intro">InVideo offers a comprehensive affiliate program for content creators, marketers, and AI enthusiasts. Our AI-powered video creation platform helps users create professional videos in minutes without complex editing skills.</p>
+                        
+                        <div class="detail-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>High Converting</h3>
+                                <p>Average conversion rate of 12%, significantly higher than industry average</p>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <h3>Competitive Commission</h3>
+                                <p>Earn 30% lifetime commission on all referred subscriptions</p>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <h3>Long Cookie Duration</h3>
+                                <p>60-day cookie window gives your referrals plenty of time to convert</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="quick-info">
+                    <h2><i class="fas fa-bolt"></i> Quick Info</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Commission Rate</span>
+                            <span class="info-value">30% Lifetime</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Cookie Duration</span>
+                            <span class="info-value">60 Days</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Average Order Value</span>
+                            <span class="info-value">$240</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Payment Threshold</span>
+                            <span class="info-value">$50</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Payment Method</span>
+                            <span class="info-value">PayPal, Wire Transfer</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Payment Frequency</span>
+                            <span class="info-value">Monthly</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="right-column">
+                <section class="trending-topics">
+                    <div class="section-header">
+                        <h2><i class="fas fa-fire"></i> Trending Topics</h2>
+                        <div class="view-selector">
+                            <label for="trending-select">View as:</label>
+                            <select id="trending-select">
+                                <option value="word-cloud" selected>Word Cloud</option>
+                                <option value="bubble-chart">Bubble Chart</option>
+                                <option value="heat-map">Heat Map</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="trend-container">
+                        <!-- Word Cloud View -->
+                        <div id="word-cloud" class="trend-view">
+                            <div class="word-cloud-container">
+                                <span class="keyword high-growth">AI Templates</span>
+                                <span class="keyword medium-growth">Video Marketing</span>
+                                <span class="keyword high-growth">Text to Video</span>
+                                <span class="keyword low-growth">YouTube Shorts</span>
+                                <span class="keyword high-growth">Auto Subtitles</span>
+                                <span class="keyword medium-growth">Social Media</span>
+                                <span class="keyword very-high-growth">AI Voice Over</span>
+                                <span class="keyword medium-growth">Video Automation</span>
+                                <span class="keyword low-growth">Content Creation</span>
+                                <span class="keyword very-high-growth">GPT Integration</span>
+                                <span class="keyword medium-growth">Webinar Videos</span>
+                                <span class="keyword high-growth">Product Demos</span>
+                                <span class="keyword low-growth">Video Editing</span>
+                                <span class="keyword high-growth">AI Effects</span>
+                            </div>
+                            <div class="word-cloud-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color very-high-growth"></span>
+                                    <span class="legend-label">Very High Growth (>50%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color high-growth"></span>
+                                    <span class="legend-label">High Growth (30-50%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color medium-growth"></span>
+                                    <span class="legend-label">Medium Growth (10-30%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color low-growth"></span>
+                                    <span class="legend-label">Low Growth (<10%)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bubble Chart View -->
+                        <div id="bubble-chart" class="trend-view" style="display:none;">
+                            <div class="bubble-chart-container">
+                                <div class="bubble very-high-growth" style="width: 120px; height: 120px">
+                                    <span>AI Voice Over</span>
+                                </div>
+                                <div class="bubble high-growth" style="width: 100px; height: 100px">
+                                    <span>Text to Video</span>
+                                </div>
+                                <div class="bubble very-high-growth" style="width: 110px; height: 110px">
+                                    <span>GPT Integration</span>
+                                </div>
+                                <div class="bubble high-growth" style="width: 90px; height: 90px">
+                                    <span>AI Templates</span>
+                                </div>
+                                <div class="bubble medium-growth" style="width: 80px; height: 80px">
+                                    <span>Video Marketing</span>
+                                </div>
+                                <div class="bubble high-growth" style="width: 95px; height: 95px">
+                                    <span>AI Effects</span>
+                                </div>
+                                <div class="bubble medium-growth" style="width: 70px; height: 70px">
+                                    <span>Social Media</span>
+                                </div>
+                                <div class="bubble low-growth" style="width: 60px; height: 60px">
+                                    <span>YouTube Shorts</span>
+                                </div>
+                            </div>
+                            <div class="bubble-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color very-high-growth"></span>
+                                    <span class="legend-label">Very High Growth (>50%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color high-growth"></span>
+                                    <span class="legend-label">High Growth (30-50%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color medium-growth"></span>
+                                    <span class="legend-label">Medium Growth (10-30%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color low-growth"></span>
+                                    <span class="legend-label">Low Growth (<10%)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Heat Map View -->
+                        <div id="heat-map" class="trend-view" style="display:none;">
+                            <div class="heatmap-container">
+                                <div class="heatmap-row">
+                                    <div class="heatmap-cell very-high-growth" data-topic="AI Voice Over">
+                                        <span>AI Voice Over</span>
+                                    </div>
+                                    <div class="heatmap-cell high-growth" data-topic="Text to Video">
+                                        <span>Text to Video</span>
+                                    </div>
+                                    <div class="heatmap-cell medium-growth" data-topic="Video Marketing">
+                                        <span>Video Marketing</span>
+                                    </div>
+                                </div>
+                                <div class="heatmap-row">
+                                    <div class="heatmap-cell very-high-growth" data-topic="GPT Integration">
+                                        <span>GPT Integration</span>
+                                    </div>
+                                    <div class="heatmap-cell high-growth" data-topic="AI Templates">
+                                        <span>AI Templates</span>
+                                    </div>
+                                    <div class="heatmap-cell low-growth" data-topic="YouTube Shorts">
+                                        <span>YouTube Shorts</span>
+                                    </div>
+                                </div>
+                                <div class="heatmap-row">
+                                    <div class="heatmap-cell high-growth" data-topic="Auto Subtitles">
+                                        <span>Auto Subtitles</span>
+                                    </div>
+                                    <div class="heatmap-cell medium-growth" data-topic="Social Media">
+                                        <span>Social Media</span>
+                                    </div>
+                                    <div class="heatmap-cell high-growth" data-topic="AI Effects">
+                                        <span>AI Effects</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="heatmap-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color very-high-growth"></span>
+                                    <span class="legend-label">Very High Growth (>50%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color high-growth"></span>
+                                    <span class="legend-label">High Growth (30-50%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color medium-growth"></span>
+                                    <span class="legend-label">Medium Growth (10-30%)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color low-growth"></span>
+                                    <span class="legend-label">Low Growth (<10%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <section class="user-reviews">
+            <div class="section-header">
+                <h2><i class="fas fa-star"></i> User Reviews</h2>
+                <div class="rating-summary">
+                    <div class="average-rating">
+                        <span class="rating-number">4.8</span>
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">based on 128 reviews</span>
+                    </div>
+                    <div class="rating-breakdown">
+                        <div class="rating-bar">
+                            <span class="rating-label">5 ★</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 80%"></div>
+                            </div>
+                            <span class="rating-percent">80%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">4 ★</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 15%"></div>
+                            </div>
+                            <span class="rating-percent">15%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">3 ★</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 3%"></div>
+                            </div>
+                            <span class="rating-percent">3%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">2 ★</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 1%"></div>
+                            </div>
+                            <span class="rating-percent">1%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span class="rating-label">1 ★</span>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 1%"></div>
+                            </div>
+                            <span class="rating-percent">1%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reviews-container">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h3 class="reviewer-name">Alex Martinez <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified Affiliate</span></h3>
+                                <div class="reviewer-meta">
+                                    <span><i class="fas fa-calendar"></i> Joined: Mar 2022</span>
+                                    <span><i class="fas fa-globe"></i> United States</span>
+                                    <span><i class="fas fa-tag"></i> Content Creator</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">★★★★★</div>
+                            <span class="review-date">Posted: June 15, 2023</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <h4 class="review-title">Revolutionized My YouTube Channel Growth</h4>
+                        <p>InVideo has been an absolute game-changer for my business. As a YouTube content creator focusing on tech reviews, I used to spend 8-10 hours editing a single video. With InVideo's AI templates and automated editing features, I've cut that time down to just 2 hours while maintaining professional quality.</p>
+                        <p>The text-to-video feature is particularly impressive. I can now convert my script into a fully rendered video with appropriate B-roll, transitions, and effects with minimal manual intervention. My audience engagement has improved dramatically, and I'm able to produce twice as many videos per week.</p>
+                        <div class="review-tags">
+                            <span class="tag">AI Templates</span>
+                            <span class="tag">Text to Video</span>
+                            <span class="tag">YouTube</span>
+                        </div>
+                    </div>
+                    <div class="review-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Avg. Monthly Earnings</span>
+                            <span class="metric-value">$1,850</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Conversion Rate</span>
+                            <span class="metric-value">15.2%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Monthly Traffic</span>
+                            <span class="metric-value">12.5K</span>
+                        </div>
+                    </div>
+                    <div class="review-actions">
+                        <button class="review-helpful"><i class="far fa-thumbs-up"></i> Helpful (42)</button>
+                        <button class="review-comment"><i class="far fa-comment"></i> Comment (8)</button>
+                        <button class="review-share"><i class="far fa-share-square"></i> Share</button>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="User Avatar" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h3 class="reviewer-name">Sarah Johnson <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified Affiliate</span></h3>
+                                <div class="reviewer-meta">
+                                    <span><i class="fas fa-calendar"></i> Joined: Jan 2023</span>
+                                    <span><i class="fas fa-globe"></i> Canada</span>
+                                    <span><i class="fas fa-tag"></i> Digital Marketer</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">★★★★★</div>
+                            <span class="review-date">Posted: May 3, 2023</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <h4 class="review-title">Perfect for Client Video Marketing</h4>
+                        <p>As a digital marketing agency owner, I've been using InVideo to create customized video content for our clients. The AI voice over feature has been particularly valuable, allowing us to generate natural-sounding narration in multiple languages without hiring voice actors for each project.</p>
+                        <p>Their affiliate program is one of the best I've worked with. The 30% lifetime commission is generous, and their marketing materials are top-notch. My clients love the end results, and I'm earning a steady passive income through referrals. The fact that commissions are lifetime means I'm still earning from clients I referred over a year ago.</p>
+                        <div class="review-tags">
+                            <span class="tag">AI Voice Over</span>
+                            <span class="tag">Marketing</span>
+                            <span class="tag">Agency</span>
+                        </div>
+                    </div>
+                    <div class="review-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Avg. Monthly Earnings</span>
+                            <span class="metric-value">$2,400</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Conversion Rate</span>
+                            <span class="metric-value">18.7%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Monthly Traffic</span>
+                            <span class="metric-value">9.8K</span>
+                        </div>
+                    </div>
+                    <div class="review-actions">
+                        <button class="review-helpful"><i class="far fa-thumbs-up"></i> Helpful (36)</button>
+                        <button class="review-comment"><i class="far fa-comment"></i> Comment (5)</button>
+                        <button class="review-share"><i class="far fa-share-square"></i> Share</button>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="User Avatar" class="reviewer-avatar">
+                            <div class="reviewer-details">
+                                <h3 class="reviewer-name">David Wong <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified Affiliate</span></h3>
+                                <div class="reviewer-meta">
+                                    <span><i class="fas fa-calendar"></i> Joined: Nov 2022</span>
+                                    <span><i class="fas fa-globe"></i> Singapore</span>
+                                    <span><i class="fas fa-tag"></i> E-learning</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">★★★★☆</div>
+                            <span class="review-date">Posted: July 8, 2023</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <h4 class="review-title">Great for Educational Content but Some Limitations</h4>
+                        <p>I run an online coding bootcamp and have been using InVideo to create educational videos for our courses. The AI-powered templates have saved us countless hours in video production, allowing us to focus more on curriculum development.</p>
+                        <p>The auto subtitle feature is extremely accurate, which is crucial for our international students. The GPT integration for script generation has also been helpful in creating engaging educational content quickly.</p>
+                        <p>The only reason I'm giving 4 stars instead of 5 is that some of the more advanced customization options can be complicated for beginners. That said, the affiliate program itself is excellent, with prompt payments and great support.</p>
+                        <div class="review-tags">
+                            <span class="tag">Education</span>
+                            <span class="tag">Auto Subtitles</span>
+                            <span class="tag">GPT Integration</span>
+                        </div>
+                    </div>
+                    <div class="review-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Avg. Monthly Earnings</span>
+                            <span class="metric-value">$1,650</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Conversion Rate</span>
+                            <span class="metric-value">13.9%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Monthly Traffic</span>
+                            <span class="metric-value">8.2K</span>
+                        </div>
+                    </div>
+                    <div class="review-actions">
+                        <button class="review-helpful"><i class="far fa-thumbs-up"></i> Helpful (29)</button>
+                        <button class="review-comment"><i class="far fa-comment"></i> Comment (7)</button>
+                        <button class="review-share"><i class="far fa-share-square"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-footer">
+                <button class="load-more-btn">Load More Reviews</button>
+            </div>
+        </section>
+        
+        <section class="social-listening">
+            <div class="section-header">
+                <h2><i class="fas fa-comments"></i> Social Listening</h2>
+                <div class="view-filter">
+                    <label for="platform-filter">Filter by platform:</label>
+                    <select id="platform-filter">
+                        <option value="all">All Platforms</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="reddit">Reddit</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="social-content-container">
+                <!-- YouTube Content -->
+                <div class="social-content-item">
+                    <div class="content-thumbnail">
+                        <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="YouTube Video">
+                        <span class="platform-badge youtube"><i class="fab fa-youtube"></i></span>
+                    </div>
+                    <div class="content-details">
+                        <h3 class="content-title">How I Made $5,000 in One Month with InVideo's Affiliate Program</h3>
+                        <p class="content-creator">TechRevolutionist <span class="verified-icon"><i class="fas fa-check-circle"></i></span></p>
+                        <div class="content-stats">
+                            <span><i class="fas fa-eye"></i> 245K views</span>
+                            <span><i class="fas fa-thumbs-up"></i> 18.5K</span>
+                            <span><i class="fas fa-comment"></i> 1.2K</span>
+                        </div>
+                        <div class="content-sentiment positive">
+                            <span class="sentiment-label"><i class="fas fa-smile"></i> Positive Sentiment</span>
+                            <span class="sentiment-score">92%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TikTok Content -->
+                <div class="social-content-item">
+                    <div class="content-thumbnail">
+                        <img src="https://via.placeholder.com/200x350/e6e6e6/333333?text=TikTok" alt="TikTok Video">
+                        <span class="platform-badge tiktok"><i class="fab fa-tiktok"></i></span>
+                    </div>
+                    <div class="content-details">
+                        <h3 class="content-title">Create Professional Videos in 5 Minutes with InVideo AI #videomarketing</h3>
+                        <p class="content-creator">@digitalmarketing_pro</p>
+                        <div class="content-stats">
+                            <span><i class="fas fa-eye"></i> 1.2M views</span>
+                            <span><i class="fas fa-heart"></i> 156K</span>
+                            <span><i class="fas fa-comment"></i> 3.8K</span>
+                        </div>
+                        <div class="content-sentiment very-positive">
+                            <span class="sentiment-label"><i class="fas fa-grin-stars"></i> Very Positive</span>
+                            <span class="sentiment-score">96%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Twitter Content -->
+                <div class="social-content-item">
+                    <div class="content-thumbnail tweet">
+                        <i class="fab fa-twitter fa-3x"></i>
+                    </div>
+                    <div class="content-details">
+                        <h3 class="content-title">Just earned my first $500 from InVideo Affiliate Program! Their 30% lifetime commission is no joke. The AI video creator is genuinely solving a huge pain point for content creators #AffiliateMarketing #VideoAI</h3>
+                        <p class="content-creator">@MarketingGuru <span class="verified-icon"><i class="fas fa-check-circle"></i></span></p>
+                        <div class="content-stats">
+                            <span><i class="fas fa-retweet"></i> 245 Retweets</span>
+                            <span><i class="fas fa-heart"></i> 1.8K Likes</span>
+                            <span><i class="fas fa-reply"></i> 89 Replies</span>
+                        </div>
+                        <div class="content-sentiment positive">
+                            <span class="sentiment-label"><i class="fas fa-smile"></i> Positive</span>
+                            <span class="sentiment-score">85%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reddit Content -->
+                <div class="social-content-item">
+                    <div class="content-thumbnail reddit">
+                        <i class="fab fa-reddit-alien fa-3x"></i>
+                    </div>
+                    <div class="content-details">
+                        <h3 class="content-title">I've tried 7 AI video creation tools, and here's why InVideo is my top recommendation for affiliate marketers [Detailed Comparison]</h3>
+                        <p class="content-creator">u/VideoMarketer23 • r/AffiliateMarketing</p>
+                        <div class="content-stats">
+                            <span><i class="fas fa-arrow-up"></i> 762 Upvotes</span>
+                            <span><i class="fas fa-award"></i> 5 Awards</span>
+                            <span><i class="fas fa-comment"></i> 124 Comments</span>
+                        </div>
+                        <div class="content-sentiment positive">
+                            <span class="sentiment-label"><i class="fas fa-smile"></i> Positive</span>
+                            <span class="sentiment-score">89%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- YouTube Content #2 -->
+                <div class="social-content-item">
+                    <div class="content-thumbnail">
+                        <img src="https://i.ytimg.com/vi/jNQXAC9IVRw/hqdefault.jpg" alt="YouTube Video">
+                        <span class="platform-badge youtube"><i class="fab fa-youtube"></i></span>
+                    </div>
+                    <div class="content-details">
+                        <h3 class="content-title">InVideo vs. Canva: Which AI Video Creator is Better for Affiliate Marketers?</h3>
+                        <p class="content-creator">Affiliate Expert <span class="verified-icon"><i class="fas fa-check-circle"></i></span></p>
+                        <div class="content-stats">
+                            <span><i class="fas fa-eye"></i> 187K views</span>
+                            <span><i class="fas fa-thumbs-up"></i> 14.2K</span>
+                            <span><i class="fas fa-comment"></i> 982</span>
+                        </div>
+                        <div class="content-sentiment moderate">
+                            <span class="sentiment-label"><i class="fas fa-meh"></i> Moderate</span>
+                            <span class="sentiment-score">72%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="social-footer">
+                <button class="view-more-btn">View More</button>
+            </div>
+        </section>
+
+        <section class="similar-programs">
+            <div class="section-header">
+                <h2><i class="fas fa-layer-group"></i> Similar Programs</h2>
+                <div class="view-filter">
+                    <label for="comparison-filter">Sort by:</label>
+                    <select id="comparison-filter">
+                        <option value="commission">Commission Rate</option>
+                        <option value="traffic">Monthly Traffic</option>
+                        <option value="earnings">Avg. Earnings</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="programs-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Program</th>
+                            <th>Category</th>
+                            <th>Commission</th>
+                            <th>Cookie</th>
+                            <th>Monthly Traffic</th>
+                            <th>Avg. Earnings</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="program-name">
+                                <img src="https://assets.website-files.com/5f204aba8e0f187e7fb85a87/5f212d6e128d71e96b1d1b18_logo.svg" alt="InVideo" class="program-logo-small">
+                                <span>InVideo</span>
+                            </td>
+                            <td>AI Video Creation</td>
+                            <td class="highlight">30% Lifetime</td>
+                            <td>60 days</td>
+                            <td>850K</td>
+                            <td>$1,800</td>
+                            <td><a href="#" class="current-program">Current</a></td>
+                        </tr>
+                        <tr>
+                            <td class="program-name">
+                                <img src="https://vidiq.com/wp-content/themes/vidiq-v4/assets/img/vidiq-logo-dark.svg" alt="VidIQ" class="program-logo-small">
+                                <span>VidIQ</span>
+                            </td>
+                            <td>Video Analytics</td>
+                            <td>25%</td>
+                            <td>30 days</td>
+                            <td>500K</td>
+                            <td>$1,400</td>
+                            <td><a href="#" class="apply-btn">Apply</a></td>
+                        </tr>
+                        <tr>
+                            <td class="program-name">
+                                <img src="https://d5nxst8fruw4z.cloudfront.net/atrk.gif?account=iA1Pi1a8Dy00ym" alt="TubeBuddy" class="program-logo-small">
+                                <span>TubeBuddy</span>
+                            </td>
+                            <td>YouTube Tools</td>
+                            <td>30%</td>
+                            <td>60 days</td>
+                            <td>600K</td>
+                            <td>$1,600</td>
+                            <td><a href="#" class="apply-btn">Apply</a></td>
+                        </tr>
+                        <tr>
+                            <td class="program-name">
+                                <img src="https://static.canva.com/static/images/canva-logo-blue.svg" alt="Canva" class="program-logo-small">
+                                <span>Canva</span>
+                            </td>
+                            <td>Design & Video</td>
+                            <td>15-30%</td>
+                            <td>30 days</td>
+                            <td>1M</td>
+                            <td>$1,250</td>
+                            <td><a href="#" class="apply-btn">Apply</a></td>
+                        </tr>
+                        <tr>
+                            <td class="program-name">
+                                <img src="https://assets-global.website-files.com/5d816b07d269382588dbcab1/5e473e9a9e8ac96f66945f20_logo-small.svg" alt="Descript" class="program-logo-small">
+                                <span>Descript</span>
+                            </td>
+                            <td>AI Audio/Video</td>
+                            <td>25%</td>
+                            <td>45 days</td>
+                            <td>450K</td>
+                            <td>$1,350</td>
+                            <td><a href="#" class="apply-btn">Apply</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Trending Topics View Switching
+            const trendingSelect = document.getElementById('trending-select');
+            const wordCloud = document.getElementById('word-cloud');
+            const bubbleChart = document.getElementById('bubble-chart');
+            const heatMap = document.getElementById('heat-map');
+            
+            trendingSelect.addEventListener('change', function() {
+                // Hide all views
+                wordCloud.style.display = 'none';
+                bubbleChart.style.display = 'none';
+                heatMap.style.display = 'none';
+                
+                // Show selected view
+                const selectedView = this.value;
+                if (selectedView === 'word-cloud') {
+                    wordCloud.style.display = 'block';
+                } else if (selectedView === 'bubble-chart') {
+                    bubbleChart.style.display = 'block';
+                } else if (selectedView === 'heat-map') {
+                    heatMap.style.display = 'block';
+                }
+            });
+            
+            // Social Listening Platform Filter
+            const platformFilter = document.getElementById('platform-filter');
+            const socialItems = document.querySelectorAll('.social-content-item');
+            
+            platformFilter.addEventListener('change', function() {
+                const selectedPlatform = this.value;
+                
+                socialItems.forEach(item => {
+                    if (selectedPlatform === 'all') {
+                        item.style.display = 'flex';
+                    } else {
+                        const hasPlatformBadge = item.querySelector(`.platform-badge.${selectedPlatform}`);
+                        const isTweet = selectedPlatform === 'twitter' && item.querySelector('.content-thumbnail.tweet');
+                        const isReddit = selectedPlatform === 'reddit' && item.querySelector('.content-thumbnail.reddit');
+                        
+                        if (hasPlatformBadge || isTweet || isReddit) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    }
+                });
+            });
+            
+            // Similar Programs Sorting
+            const comparisonFilter = document.getElementById('comparison-filter');
+            const programsTable = document.querySelector('.comparison-table tbody');
+            
+            comparisonFilter.addEventListener('change', function() {
+                const selectedSort = this.value;
+                const rows = Array.from(programsTable.querySelectorAll('tr'));
+                
+                rows.sort((a, b) => {
+                    let valueA, valueB;
+                    
+                    if (selectedSort === 'commission') {
+                        valueA = a.cells[2].textContent;
+                        valueB = b.cells[2].textContent;
+                        
+                        // Extract percentage values
+                        const percentA = parseInt(valueA.match(/\d+/)[0]);
+                        const percentB = parseInt(valueB.match(/\d+/)[0]);
+                        
+                        return percentB - percentA; // Sort high to low
+                    } else if (selectedSort === 'traffic') {
+                        valueA = a.cells[4].textContent;
+                        valueB = b.cells[4].textContent;
+                        
+                        // Convert K/M to actual numbers
+                        const numA = valueA.includes('M') ? parseFloat(valueA) * 1000000 : parseFloat(valueA) * 1000;
+                        const numB = valueB.includes('M') ? parseFloat(valueB) * 1000000 : parseFloat(valueB) * 1000;
+                        
+                        return numB - numA; // Sort high to low
+                    } else if (selectedSort === 'earnings') {
+                        valueA = a.cells[5].textContent;
+                        valueB = b.cells[5].textContent;
+                        
+                        // Extract dollar values
+                        const dollarA = parseFloat(valueA.replace('$', '').replace(',', ''));
+                        const dollarB = parseFloat(valueB.replace('$', '').replace(',', ''));
+                        
+                        return dollarB - dollarA; // Sort high to low
+                    }
+                });
+                
+                // Remove all existing rows
+                while (programsTable.firstChild) {
+                    programsTable.removeChild(programsTable.firstChild);
+                }
+                
+                // Add sorted rows back
+                rows.forEach(row => {
+                    programsTable.appendChild(row);
+                });
+            });
+            
+            // Review Interaction
+            const helpfulButtons = document.querySelectorAll('.review-helpful');
+            helpfulButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (!this.classList.contains('active')) {
+                        this.classList.add('active');
+                        const count = this.textContent.match(/\d+/)[0];
+                        const newCount = parseInt(count) + 1;
+                        this.innerHTML = `<i class="fas fa-thumbs-up"></i> Helpful (${newCount})`;
+                    } else {
+                        this.classList.remove('active');
+                        const count = this.textContent.match(/\d+/)[0];
+                        const newCount = parseInt(count) - 1;
+                        this.innerHTML = `<i class="far fa-thumbs-up"></i> Helpful (${newCount})`;
+                    }
+                });
+            });
+            
+            // Interactive Bubble Chart
+            const bubbles = document.querySelectorAll('.bubble');
+            bubbles.forEach(bubble => {
+                bubble.addEventListener('mouseover', function() {
+                    this.classList.add('active');
+                });
+                
+                bubble.addEventListener('mouseout', function() {
+                    this.classList.remove('active');
+                });
+                
+                bubble.addEventListener('click', function() {
+                    const topic = this.querySelector('span').textContent;
+                    alert(`Topic: ${topic}\nClick to see more details about this trending topic.`);
+                });
+            });
+            
+            // Interactive Heat Map
+            const heatmapCells = document.querySelectorAll('.heatmap-cell');
+            heatmapCells.forEach(cell => {
+                cell.addEventListener('mouseover', function() {
+                    this.classList.add('active');
+                });
+                
+                cell.addEventListener('mouseout', function() {
+                    this.classList.remove('active');
+                });
+                
+                cell.addEventListener('click', function() {
+                    const topic = this.getAttribute('data-topic');
+                    alert(`Topic: ${topic}\nClick to see more details about this trending topic.`);
+                });
+            });
+            
+            // Load More Reviews Button
+            const loadMoreButton = document.querySelector('.load-more-btn');
+            loadMoreButton.addEventListener('click', function() {
+                alert('Loading more reviews... This would load additional reviews from the server.');
+            });
+            
+            // View More Social Content Button
+            const viewMoreButton = document.querySelector('.view-more-btn');
+            viewMoreButton.addEventListener('click', function() {
+                alert('Loading more social content... This would load additional social media content from the server.');
+            });
+        });
+    </script>
+</body>
+</html> 

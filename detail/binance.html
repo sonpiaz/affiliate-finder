@@ -1,413 +1,1719 @@
-<script src="language.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // User login state (for demo purposes)
-    let isLoggedIn = false;
-    
-    // DOM Elements
-    const userStatus = document.getElementById('userStatus');
-    const userLoginToggle = document.getElementById('userLoginToggle');
-    const viewMoreSocialBtn = document.getElementById('viewMoreSocialBtn');
-    const loginModal = document.getElementById('loginModal');
-    const closeLoginModal = document.getElementById('closeLoginModal');
-    const loginBtn = document.getElementById('loginBtn');
-    const signupBtn = document.getElementById('signupBtn');
-    const hiddenContent = document.getElementById('hiddenContent');
-    
-    // Trending Topics display selector
-    const trendDisplaySelect = document.getElementById('trendDisplaySelect');
-    
-    // Đảm bảo tất cả các container tồn tại
-    const containers = {
-      'tags': document.getElementById('tagsView'),
-      'wordcloud': document.getElementById('wordcloudView'),
-      'timeline': document.getElementById('timelineView'),
-      'bubbles': document.getElementById('bubblesView'),
-      'heatmap': document.getElementById('heatmapView')
-    };
-    
-    // Ẩn tất cả các view với hiệu ứng mượt mà
-    function hideAllViews() {
-      for (const type in containers) {
-        if (containers[type]) {
-          // Thêm class hidden để kích hoạt hiệu ứng
-          containers[type].classList.add('hidden');
-          setTimeout(() => {
-            containers[type].style.display = 'none';
-            containers[type].classList.remove('hidden');
-          }, 300); // Thời gian trễ khớp với thời gian transition trong CSS
-        }
-      }
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binance Affiliate Program | Affiliate Finder</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Căn chỉnh Social Tabs sang phải */
+    .social-tabs {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
     }
     
-    // Hiển thị view được chọn với hiệu ứng mượt mà
-    function showView(viewType) {
-      if (containers[viewType]) {
-        // Đặt display thành block trước, sau đó loại bỏ lớp hidden sau một tick
-        containers[viewType].style.display = 'block';
-        containers[viewType].classList.add('hidden');
-        setTimeout(() => {
-          containers[viewType].classList.remove('hidden');
-        }, 10);
-      }
+    .social-tab {
+      margin-left: 10px;
+      padding: 8px 15px;
+      background-color: #f8f9fa;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-weight: 500;
     }
     
-    // Chuyển đổi giữa các view với hiệu ứng
-    function switchView(viewType) {
-      // Lưu lại giá trị trong localStorage để duy trì qua các phiên
-      localStorage.setItem('trendingTopicsView', viewType);
-      
-      // Đảm bảo dropdown được chọn đúng
-      if (trendDisplaySelect) {
-        trendDisplaySelect.value = viewType;
-      }
-      
-      // Ẩn view hiện tại
-      hideAllViews();
-      
-      // Hiển thị view mới sau một khoảng thời gian nhỏ để đảm bảo hiệu ứng chuyển đổi mượt mà
-      setTimeout(() => {
-        showView(viewType);
-      }, 310); // Chờ lâu hơn một chút so với thời gian ẩn
+    .social-tab:hover {
+      background-color: #e9ecef;
+      transform: translateY(-2px);
     }
     
-    // Xử lý sự kiện khi người dùng chọn loại view khác
-    if (trendDisplaySelect) {
-      trendDisplaySelect.addEventListener('change', function() {
-        const selectedView = this.value;
-        switchView(selectedView);
-      });
+    .social-tab.active {
+      background-color: #3861FB;
+      color: white;
     }
     
-    // Khởi tạo view mặc định hoặc view đã lưu
-    function initTrendingTopicsView() {
-      // Lấy view đã lưu hoặc dùng mặc định 'wordcloud'
-      const savedView = localStorage.getItem('trendingTopicsView') || 'wordcloud';
-      
-      // Ẩn tất cả views (ngay lập tức, không cần hiệu ứng khi khởi tạo)
-      for (const type in containers) {
-        if (containers[type]) {
-          containers[type].style.display = 'none';
-        }
-      }
-      
-      // Hiển thị view đã lưu hoặc mặc định
-      if (containers[savedView]) {
-        containers[savedView].style.display = 'block';
-      } else if (containers['wordcloud']) {
-        // Fallback nếu view đã lưu không tồn tại
-        containers['wordcloud'].style.display = 'block';
-        localStorage.setItem('trendingTopicsView', 'wordcloud');
-      }
-      
-      // Đặt dropdown thành giá trị tương ứng
-      if (trendDisplaySelect) {
-        trendDisplaySelect.value = savedView;
-      }
+    .social-tab i {
+      margin-right: 5px;
     }
-    
-    // Update UI based on login state
-    function updateLoginUI() {
-      const statusText = document.querySelector('.login-status');
-      const avatar = document.querySelector('.user-avatar');
-      
-      if (isLoggedIn) {
-        statusText.textContent = 'User';
-        avatar.textContent = 'U';
-        avatar.style.backgroundColor = '#3861fb';
-        
-        // Show hidden content
-        if (hiddenContent) {
-          hiddenContent.style.display = 'block';
-        }
-        
-        // Change View More button text
-        if (viewMoreSocialBtn) {
-          viewMoreSocialBtn.innerHTML = 'No more content <i class="fas fa-check"></i>';
-          viewMoreSocialBtn.disabled = true;
-          viewMoreSocialBtn.style.opacity = '0.7';
-        }
-      } else {
-        statusText.textContent = 'Guest';
-        avatar.textContent = 'G';
-        avatar.style.backgroundColor = '#F0B90B';
-        
-        // Hide hidden content
-        if (hiddenContent) {
-          hiddenContent.style.display = 'none';
-        }
-        
-        // Reset View More button
-        if (viewMoreSocialBtn) {
-          viewMoreSocialBtn.innerHTML = '<i class="fas fa-plus-circle"></i> View More';
-          viewMoreSocialBtn.disabled = false;
-          viewMoreSocialBtn.style.opacity = '1';
-        }
-      }
-    }
-    
-    // Toggle login state (demo only)
-    const loginToggle = document.getElementById('loginToggle');
-    if (loginToggle) {
-      loginToggle.addEventListener('change', function() {
-        isLoggedIn = this.checked;
-        updateLoginUI();
-      });
-    }
-    
-    // Social Listening Tabs
-    const socialTabs = document.querySelectorAll('.social-tab');
-    socialTabs.forEach(tab => {
-      tab.addEventListener('click', function() {
-        // Remove active class from all tabs
-        socialTabs.forEach(t => t.classList.remove('active'));
-        
-        // Add active class to clicked tab
-        this.classList.add('active');
-      });
-    });
-    
-    // Thêm tương tác cho các phần tử trong Word Cloud
-    function setupWordCloudInteractions() {
-      const wordElements = document.querySelectorAll('.word-cloud .word');
-      wordElements.forEach(word => {
-        word.addEventListener('click', function() {
-          const text = this.textContent;
-          const growthClass = this.classList.contains('extreme') ? 'extreme' : 
-                             this.classList.contains('high') ? 'high' :
-                             this.classList.contains('medium') ? 'medium' : 'low';
-          
-          // Hiển thị thông tin khi click (có thể hiển thị tooltip hoặc modal)
-          showTopicInfo(text, growthClass);
-        });
-      });
-    }
-    
-    // Thêm tương tác cho các phần tử trong Bubble Chart
-    function setupBubbleInteractions() {
-      const bubbleElements = document.querySelectorAll('.bubble-chart .bubble');
-      bubbleElements.forEach(bubble => {
-        bubble.addEventListener('click', function() {
-          const text = this.querySelector('span').textContent;
-          const growthClass = this.classList.contains('extreme') ? 'extreme' : 
-                             this.classList.contains('high') ? 'high' :
-                             this.classList.contains('medium') ? 'medium' : 'low';
-          
-          showTopicInfo(text, growthClass);
-        });
-      });
-    }
-    
-    // Thêm tương tác cho các phần tử trong Heatmap
-    function setupHeatmapInteractions() {
-      const heatmapCells = document.querySelectorAll('.heatmap-cell');
-      heatmapCells.forEach(cell => {
-        if (cell.firstElementChild) {
-          cell.addEventListener('click', function() {
-            const text = this.querySelector('span').textContent;
-            const growthClass = this.classList.contains('extreme') ? 'extreme' : 
-                               this.classList.contains('high') ? 'high' :
-                               this.classList.contains('medium') ? 'medium' : 'low';
-            
-            showTopicInfo(text, growthClass);
-          });
-        }
-      });
-    }
-    
-    // Hiển thị thông tin về chủ đề khi người dùng click
-    function showTopicInfo(topic, growthClass) {
-      // Định nghĩa mức tăng trưởng dựa trên lớp
-      const growthLevel = {
-        'extreme': 'Tăng trưởng cực cao (>50%)',
-        'high': 'Tăng trưởng cao (30-50%)',
-        'medium': 'Tăng trưởng trung bình (10-30%)',
-        'low': 'Tăng trưởng thấp (<10%)'
-      };
-      
-      // Tạo thông báo với thông tin
-      alert(`Chủ đề: ${topic}\nMức tăng trưởng: ${growthLevel[growthClass]}\n\nClick để xem chi tiết về xu hướng này.`);
-      
-      // Trong ứng dụng thực tế, chúng ta có thể mở modal hoặc trang chi tiết
-    }
-    
-    // Initialize language switcher
-    if (typeof initializeLanguageSwitcher === 'function') {
-      initializeLanguageSwitcher();
-    }
-    
-    // Initial UI update
-    updateLoginUI();
-    
-    // Khởi tạo view cho Trending Topics
-    initTrendingTopicsView();
-    
-    // Thiết lập các tương tác
-    setupWordCloudInteractions();
-    setupBubbleInteractions();
-    setupHeatmapInteractions();
-  });
-</script>
 
-<!-- Thêm phần tooltip cho từ khóa -->
-<style>
-/* Tooltip styles */
-.topic-tooltip {
-  position: absolute;
-  background-color: rgba(33, 37, 41, 0.9);
-  color: white;
-  padding: 10px 15px;
-  border-radius: 6px;
-  z-index: 1000;
-  font-size: 14px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  max-width: 300px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  transform: translateY(10px);
-}
-
-.topic-tooltip.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.topic-tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -8px;
-  border-width: 8px;
-  border-style: solid;
-  border-color: rgba(33, 37, 41, 0.9) transparent transparent transparent;
-}
-
-.topic-tooltip .topic-title {
-  font-weight: 600;
-  margin-bottom: 5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding-bottom: 5px;
-}
-
-.topic-tooltip .topic-growth {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-bottom: 5px;
-}
-
-.topic-tooltip .topic-description {
-  font-size: 13px;
-  margin-top: 8px;
-  opacity: 0.9;
-}
-
-.growth-indicator {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
-.growth-indicator.extreme {
-  background-color: #f0b90b;
-}
-
-.growth-indicator.high {
-  background-color: #3861fb;
-}
-
-.growth-indicator.medium {
-  background-color: #00c087;
-}
-
-.growth-indicator.low {
-  background-color: #6c757d;
-}
-</style>
-
-<script>
-// Chức năng tooltip cho các từ khóa
-document.addEventListener('DOMContentLoaded', function() {
-  // Tạo tooltip element
-  const tooltip = document.createElement('div');
-  tooltip.className = 'topic-tooltip';
-  document.body.appendChild(tooltip);
-  
-  // Dữ liệu mẫu cho các từ khóa
-  const topicData = {
-    'Binance referral bonus': {
-      growth: 'extreme',
-      description: 'Chương trình giới thiệu của Binance cho phép người dùng kiếm hoa hồng suốt đời từ người được giới thiệu.'
-    },
-    'passive income': {
-      growth: 'high',
-      description: 'Những chiến lược để tạo thu nhập thụ động từ tiền điện tử thông qua giao dịch, staking và affiliate.'
-    },
-    'crypto trader': {
-      growth: 'medium',
-      description: 'Những người chuyên giao dịch tiền điện tử, thường quan tâm đến các công cụ và nền tảng có phí giao dịch thấp.'
-    },
-    'Binance vs OKX': {
-      growth: 'high',
-      description: 'So sánh giữa hai sàn giao dịch tiền điện tử lớn, tập trung vào phí, tính năng và chương trình tiếp thị liên kết.'
+    /* Cải thiện social-filters */
+    .social-filters {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
-  };
-  
-  // Xử lý các từ khóa trong Word Cloud
-  const wordElements = document.querySelectorAll('.word-cloud .word');
-  wordElements.forEach(word => {
-    const text = word.textContent;
     
-    // Hiển thị tooltip khi hover
-    word.addEventListener('mouseenter', function(e) {
-      const rect = this.getBoundingClientRect();
-      const growthClass = this.classList.contains('extreme') ? 'extreme' : 
-                         this.classList.contains('high') ? 'high' :
-                         this.classList.contains('medium') ? 'medium' : 'low';
-      
-      // Mức tăng trưởng dựa trên lớp
-      const growthLevel = {
-        'extreme': 'Tăng trưởng cực cao (>50%)',
-        'high': 'Tăng trưởng cao (30-50%)',
-        'medium': 'Tăng trưởng trung bình (10-30%)',
-        'low': 'Tăng trưởng thấp (<10%)'
-      };
-      
-      // Dữ liệu cho từ này hoặc dữ liệu mặc định
-      const topicInfo = topicData[text] || {
-        growth: growthClass,
-        description: 'Xu hướng tìm kiếm liên quan đến chương trình affiliate của Binance.'
-      };
-      
-      // Xây dựng nội dung tooltip
-      tooltip.innerHTML = `
-        <div class="topic-title">${text}</div>
-        <div class="topic-growth">
-          <span class="growth-indicator ${growthClass}"></span>
-          <span>${growthLevel[growthClass]}</span>
+    .social-search {
+      position: relative;
+      flex: 1;
+      max-width: 300px;
+    }
+    
+    .social-search input {
+      width: 100%;
+      padding: 10px 15px 10px 35px;
+      border-radius: 20px;
+      border: 1px solid #e0e0e0;
+      outline: none;
+      transition: all 0.3s;
+    }
+    
+    .social-search input:focus {
+      border-color: #3861FB;
+      box-shadow: 0 0 0 2px rgba(56, 97, 251, 0.1);
+    }
+    
+    .social-search i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+    }
+    
+    .social-sort select {
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: 1px solid #e0e0e0;
+      outline: none;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    /* Style cho login popup */
+    .login-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .login-popup-content {
+      background-color: white;
+      border-radius: 8px;
+      padding: 30px;
+      width: 400px;
+      max-width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .login-popup-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #777;
+    }
+    
+    .login-popup h3 {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 1.5rem;
+    }
+    
+    .login-popup p {
+      margin-bottom: 25px;
+      color: #555;
+    }
+    
+    .login-popup-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .login-popup-btn {
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .login-btn {
+      background-color: #3861FB;
+      color: white;
+    }
+    
+    .register-btn {
+      background-color: #F0B90B;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <a href="../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> <span data-i18n="backButton">Back to Programs</span>
+      </a>
+      <div class="user-controls">
+        <div class="language-switcher">
+          <select id="languageSelect" class="language-select">
+            <option value="en">English</option>
+            <option value="vi">Tiếng Việt</option>
+          </select>
         </div>
-        <div class="topic-description">${topicInfo.description}</div>
-      `;
-      
-      // Định vị tooltip
-      tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
-      tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
-      
-      // Hiển thị tooltip
-      tooltip.classList.add('visible');
-    });
-    
-    // Ẩn tooltip khi không hover
-    word.addEventListener('mouseleave', function() {
-      tooltip.classList.remove('visible');
-    });
-  });
-});
-</script>
+        <div class="user-status" id="userStatus">
+          <span class="login-status">Guest</span>
+          <div class="user-avatar">G</div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-/* JS cải tiến mới */
+  <div class="container">
+    <!-- Header with logo and title -->
+    <div class="program-header">
+      <div class="container">
+        <div class="program-identity">
+          <div class="logo">
+            <img src="https://public.bnbstatic.com/20190405/eb2349c3-b2f8-4a93-a286-8f86a62ea9d8.png" alt="Binance Logo">
+          </div>
+          <div class="program-info">
+            <h1 data-i18n="programName">Binance Affiliate Program</h1>
+            <div class="category-tag" data-i18n="category">Cryptocurrency Exchange</div>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <a href="https://www.binance.com/en/affiliates" class="btn primary" data-i18n="joinButton">Join Program</a>
+          <button class="btn" id="saveButton"><i class="far fa-bookmark"></i> <span data-i18n="saveButton">Save</span></button>
+          <button class="btn" id="shareButton"><i class="fas fa-share-alt"></i> <span data-i18n="shareButton">Share</span></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-overview">
+      <div class="stat-card">
+        <h3 data-i18n="commissionRate">Commission Rate</h3>
+        <div class="stat-value">Up to 50%</div>
+        <div class="stat-detail" data-i18n="commissionDetail">Lifetime commission on trading fees</div>
+      </div>
+      <div class="stat-card">
+        <h3 data-i18n="cookieDuration">Cookie Duration</h3>
+        <div class="stat-value">90 Days</div>
+        <div class="stat-detail" data-i18n="cookieDetail">Plus permanent tracking for registered users</div>
+      </div>
+      <div class="stat-card">
+        <h3 data-i18n="monthlyTraffic">Monthly Traffic</h3>
+        <div class="stat-value">110.4M</div>
+        <div class="stat-detail" data-i18n="trafficDetail">Global visitors (last 30 days)</div>
+      </div>
+      <div class="stat-card">
+        <h3 data-i18n="paymentFrequency">Payment Frequency</h3>
+        <div class="stat-value" data-i18n="paymentValue">Daily to Monthly</div>
+        <div class="stat-detail" data-i18n="paymentDetail">Customizable payment schedule</div>
+      </div>
+    </div>
+
+    <div class="content-columns">
+      <div class="main-column">
+        <!-- Program Details -->
+        <div class="program-details">
+          <h2><i class="fas fa-info-circle"></i> <span data-i18n="programDetails">Program Details</span></h2>
+          
+          <div class="details-content">
+            <p data-i18n="detailsContent1">The Binance Affiliate Program offers one of the industry's most competitive commission structures. Affiliates can earn up to 50% of the trading fees generated by referred users. The earnings are calculated based on the trading volume of your referrals and are available through a customizable payment schedule.</p>
+            <p data-i18n="detailsContent2">Binance provides dedicated account managers to help optimize your campaigns and maximize conversions. The platform offers real-time reporting, detailed analytics, and a comprehensive set of marketing materials to support your promotional efforts.</p>
+            
+            <h3 data-i18n="keyFeatures">Key Features</h3>
+            <ul class="features-list">
+              <li><span class="feature-icon"><i class="fas fa-percentage"></i></span> <span data-i18n="feature1">Up to 50% commission on trading fees</span></li>
+              <li><span class="feature-icon"><i class="fas fa-chart-line"></i></span> <span data-i18n="feature2">Real-time reporting and analytics</span></li>
+              <li><span class="feature-icon"><i class="fas fa-cookie"></i></span> <span data-i18n="feature3">90-day cookie duration with permanent tracking</span></li>
+              <li><span class="feature-icon"><i class="fas fa-tools"></i></span> <span data-i18n="feature4">Comprehensive marketing tools and materials</span></li>
+              <li><span class="feature-icon"><i class="fas fa-user-tie"></i></span> <span data-i18n="feature5">Dedicated affiliate manager support</span></li>
+              <li><span class="feature-icon"><i class="fas fa-globe"></i></span> <span data-i18n="feature6">Global market reach with multi-language support</span></li>
+            </ul>
+          </div>
+          
+        <div class="quick-info">
+          <h2>Quick Info</h2>
+          
+          <div class="info-item">
+            <span class="label">Payment Methods</span>
+            <span class="value">
+              <i class="fas fa-coins payment-icon"></i>
+              <i class="fas fa-dollar-sign payment-icon"></i>
+            </span>
+          </div>
+          
+          <div class="info-item">
+            <span class="label">Minimum Payout</span>
+            <span class="value">$0</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="label">Launch Year</span>
+            <span class="value">2017</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="label">Cookie Duration</span>
+            <span class="value">Unlimited</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="label">Contact Info</span>
+            <span class="value email">affiliates@binance.com</span>
+          </div>
+          
+          <div class="info-item">
+            <span class="label">Category</span>
+            <span class="value">
+              <span class="category-pill">Cryptocurrency</span>
+              <span class="category-pill">Exchange</span>
+              <span class="category-pill">Finance</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Analytics Board -->
+        <div class="analytics-board">
+          <div class="section-header">
+            <h2><i class="fas fa-chart-line"></i> Analytics Board</h2>
+            <div class="date-range">
+              <select class="time-filter">
+                <option value="7">Last 7 days</option>
+                <option value="30" selected>Last 30 days</option>
+                <option value="90">Last 90 days</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Visit Over Time - Enhanced Traffic Chart -->
+          <div class="traffic-chart-container">
+            <div class="traffic-header">
+              <h3><i class="fas fa-chart-area"></i> Visit Over Time</h3>
+              <div class="traffic-period">Jan 2022 - Mar 2025 All Traffic</div>
+            </div>
+            
+            <div class="traffic-chart-wrapper">
+              <div class="traffic-chart-y-axis">
+                <div class="y-axis-label">100M</div>
+                <div class="y-axis-label">75M</div>
+                <div class="y-axis-label">50M</div>
+                <div class="y-axis-label">25M</div>
+                <div class="y-axis-label">0</div>
+              </div>
+              
+              <div class="traffic-chart-canvas">
+                <!-- Chart Grid Lines -->
+                <div class="traffic-chart-line"></div>
+                <div class="traffic-chart-line"></div>
+                <div class="traffic-chart-line"></div>
+                <div class="traffic-chart-line"></div>
+                <div class="traffic-chart-line"></div>
+                
+                <!-- Chart Data Area -->
+                <div class="traffic-chart-data"></div>
+                
+                <!-- Interactive Data Points -->
+                <svg class="traffic-chart-line-path" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <path d="M0,15 L4,15 8,9 12,20 16,13 20,25 24,30 28,40 32,35 36,50 40,45 44,52 48,60 52,55 56,65 60,60 64,70 68,68 72,75 76,73 80,80 84,75 88,85 92,80 96,90 100,95" stroke-dasharray="1000" stroke-dashoffset="1000">
+                    <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" begin="0.5s" fill="freeze" />
+                  </path>
+                </svg>
+                
+                <div class="data-point" style="left: 0%; bottom: 15%;">
+                  <div class="data-tooltip">Jan 2022: 25.3M</div>
+                </div>
+                <div class="data-point" style="left: 12%; bottom: 20%;">
+                  <div class="data-tooltip">Apr 2022: 30.8M</div>
+                </div>
+                <div class="data-point" style="left: 24%; bottom: 30%;">
+                  <div class="data-tooltip">Jul 2022: 42.1M</div>
+                </div>
+                <div class="data-point" style="left: 36%; bottom: 50%;">
+                  <div class="data-tooltip">Oct 2022: 49.5M</div>
+                </div>
+                <div class="data-point" style="left: 48%; bottom: 60%;">
+                  <div class="data-tooltip">Jan 2023: 65.7M</div>
+                </div>
+                <div class="data-point" style="left: 60%; bottom: 60%;">
+                  <div class="data-tooltip">Jul 2023: 71.2M</div>
+                </div>
+                <div class="data-point" style="left: 72%; bottom: 75%;">
+                  <div class="data-tooltip">Jan 2024: 79.6M</div>
+                </div>
+                <div class="data-point" style="left: 84%; bottom: 75%;">
+                  <div class="data-tooltip">Jul 2024: 82.3M</div>
+                </div>
+                <div class="data-point" style="left: 100%; bottom: 95%;">
+                  <div class="data-tooltip">Mar 2025: 89.7M</div>
+                </div>
+              </div>
+              
+              <div class="traffic-chart-x-axis">
+                <div class="x-axis-label">Jan 2022</div>
+                <div class="x-axis-label">Jul 2022</div>
+                <div class="x-axis-label">Jan 2023</div>
+                <div class="x-axis-label">Jul 2023</div>
+                <div class="x-axis-label">Jan 2024</div>
+                <div class="x-axis-label">Jul 2024</div>
+                <div class="x-axis-label">Mar 2025</div>
+              </div>
+            </div>
+            
+            <div class="traffic-stats">
+              <div class="traffic-stat">
+                <div class="stat-value">89.7M</div>
+                <div class="stat-label">Monthly Visits</div>
+              </div>
+              <div class="traffic-stat">
+                <div class="stat-value">00:12:45</div>
+                <div class="stat-label">Avg. Visit Duration</div>
+              </div>
+              <div class="traffic-stat">
+                <div class="stat-value">8.32</div>
+                <div class="stat-label">Pages per Visit</div>
+              </div>
+              <div class="traffic-stat">
+                <div class="stat-value">21.38%</div>
+                <div class="stat-label">Bounce Rate</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Top Keywords -->
+          <section class="top-keywords">
+            <h2>
+              <span><i class="fas fa-key"></i> Top Keywords</span>
+              <span class="time-period">Last 3 months</span>
+            </h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Keyword</th>
+                  <th>Traffic</th>
+                  <th>Position</th>
+                  <th>Trend</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td class="keyword">binance</td>
+                  <td class="traffic">28.4M</td>
+                  <td><span class="position">#1</span></td>
+                  <td class="trend-neutral">―</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td class="keyword">crypto exchange</td>
+                  <td class="traffic">12.7M</td>
+                  <td><span class="position">#2</span></td>
+                  <td class="trend-up">1</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td class="keyword">buy bitcoin</td>
+                  <td class="traffic">10.2M</td>
+                  <td><span class="position">#3</span></td>
+                  <td class="trend-up">2</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td class="keyword">cryptocurrency trading</td>
+                  <td class="traffic">7.8M</td>
+                  <td><span class="position">#1</span></td>
+                  <td class="trend-down">1</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Social Listening -->
+          <section class="social-listening">
+            <h2>
+              <span><i class="fas fa-comments"></i> Social Listening</span>
+              <span class="last-updated">Last updated: 8 hours ago</span>
+            </h2>
+            
+            <div class="social-tabs">
+              <div class="social-tab active"><i class="fas fa-globe"></i> All</div>
+              <div class="social-tab"><i class="fab fa-youtube"></i> YouTube</div>
+              <div class="social-tab"><i class="fab fa-tiktok"></i> TikTok</div>
+              <div class="social-tab"><i class="fab fa-twitter"></i> X (Twitter)</div>
+              <div class="social-tab"><i class="fab fa-reddit"></i> Reddit</div>
+            </div>
+            
+            <div class="social-filters">
+              <div class="social-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search content...">
+              </div>
+              <div class="social-sort">
+                <select>
+                  <option selected>Most Recent</option>
+                  <option>Most Popular</option>
+                  <option>Highest Engagement</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="social-content">
+              <div class="social-content-item">
+                <div class="social-content-thumbnail">
+                  <img src="../assets/video-thumbnail.jpg" alt="Binance Tutorial 2023">
+                </div>
+                <div class="social-content-info">
+                  <h3 class="social-content-title">Binance Tutorial 2023: Complete Beginner's Guide to Trading Cryptocurrency</h3>
+                  <div class="social-content-creator">
+                    <i class="fas fa-user-circle"></i> By Crypto Academy <i class="fas fa-check-circle" style="color: #3861fb;"></i>
+                  </div>
+                  <div class="social-content-stats">
+                    <div class="social-content-stat"><i class="fas fa-eye"></i> 245K</div>
+                    <div class="social-content-stat"><i class="fas fa-thumbs-up"></i> 18.2K</div>
+                    <div class="social-content-stat"><i class="fas fa-comment"></i> 432</div>
+                    <div class="social-content-stat"><i class="fas fa-calendar-alt"></i> 3 days ago</div>
+                  </div>
+                  <div class="social-content-sentiment sentiment-positive">Very Positive</div>
+                  <div class="social-actions">
+                    <button class="social-action-btn primary"><i class="fas fa-play"></i> Watch</button>
+                    <button class="social-action-btn"><i class="fas fa-bookmark"></i> Save</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="social-content-item">
+                <div class="social-content-thumbnail">
+                  <img src="../assets/video-thumbnail2.jpg" alt="Binance Affiliate Program">
+                </div>
+                <div class="social-content-info">
+                  <h3 class="social-content-title">How I Made $5,000 in One Month with Binance Affiliate Program</h3>
+                  <div class="social-content-creator">
+                    <i class="fas fa-user-circle"></i> By Crypto Income <i class="fas fa-check-circle" style="color: #3861fb;"></i>
+                  </div>
+                  <div class="social-content-stats">
+                    <div class="social-content-stat"><i class="fas fa-eye"></i> 189K</div>
+                    <div class="social-content-stat"><i class="fas fa-thumbs-up"></i> 22.1K</div>
+                    <div class="social-content-stat"><i class="fas fa-comment"></i> 678</div>
+                    <div class="social-content-stat"><i class="fas fa-calendar-alt"></i> 1 week ago</div>
+                  </div>
+                  <div class="social-content-sentiment sentiment-positive">Very Positive</div>
+                  <div class="social-actions">
+                    <button class="social-action-btn primary"><i class="fas fa-play"></i> Watch</button>
+                    <button class="social-action-btn"><i class="fas fa-bookmark"></i> Save</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="social-content-item">
+                <div class="social-content-thumbnail">
+                  <img src="../assets/tiktok-thumbnail.jpg" alt="Binance TikTok">
+                </div>
+                <div class="social-content-info">
+                  <h3 class="social-content-title">3 Secrets to Maximize Your Binance Affiliate Earnings #crypto #binance #passive</h3>
+                  <div class="social-content-creator">
+                    <i class="fas fa-user-circle"></i> By CryptoTips <i class="fas fa-check-circle" style="color: #3861fb;"></i>
+                  </div>
+                  <div class="social-content-stats">
+                    <div class="social-content-stat"><i class="fas fa-eye"></i> 415K</div>
+                    <div class="social-content-stat"><i class="fas fa-heart"></i> 45.3K</div>
+                    <div class="social-content-stat"><i class="fas fa-comment"></i> 1.2K</div>
+                    <div class="social-content-stat"><i class="fas fa-calendar-alt"></i> 2 days ago</div>
+                  </div>
+                  <div class="social-content-sentiment sentiment-positive">Very Positive</div>
+                  <div class="social-actions">
+                    <button class="social-action-btn primary"><i class="fas fa-play"></i> Watch</button>
+                    <button class="social-action-btn"><i class="fas fa-share-alt"></i> Share</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+              <button id="viewMoreSocialBtn" class="btn primary"><i class="fas fa-plus-circle"></i> View More</button>
+            </div>
+          </section>
+
+          <!-- Trending Topics Section -->
+          <div class="trending-topics">
+            <div class="trend-header">
+              <h3 data-i18n="trendingTopics">Trending Topics</h3>
+              <div class="trend-selector">
+                <select id="trendDisplaySelect">
+                  <option value="tags">Tags</option>
+                  <option value="wordcloud" selected>Word Cloud</option>
+                  <option value="timeline">Timeline</option>
+                  <option value="bubbles">Bubble Chart</option>
+                  <option value="heatmap">Heat Map</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- Tags Container -->
+            <div class="tags-container" id="tagsView" style="display: none;">
+              <div class="trend-tags">
+                <span class="trend-tag extreme">Binance referral bonus</span>
+                <span class="trend-tag high">passive income</span>
+                <span class="trend-tag medium">crypto trader</span>
+                <span class="trend-tag high">Binance vs OKX</span>
+                <span class="trend-tag low">affiliate marketing</span>
+                <span class="trend-tag medium">commission rates</span>
+                <span class="trend-tag extreme">referral program</span>
+                <span class="trend-tag low">cryptocurrency affiliate</span>
+                <span class="trend-tag medium">marketing tools</span>
+                <span class="trend-tag high">crypto affiliate</span>
+                <span class="trend-tag low">earn bitcoin</span>
+                <span class="trend-tag medium">trading affiliate</span>
+                <span class="trend-tag low">binance partner</span>
+                <span class="trend-tag high">high commission</span>
+              </div>
+              
+              <div class="trend-legend">
+                <div class="legend-item">
+                  <div class="legend-color extreme"></div>
+                  <div class="legend-text">Extreme Growth (>80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color high"></div>
+                  <div class="legend-text">High Growth (40-80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color medium"></div>
+                  <div class="legend-text">Medium Growth (20-40%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color low"></div>
+                  <div class="legend-text">Steady Growth (5-20%)</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Word Cloud Container -->
+            <div class="word-cloud-container" id="wordcloudView" style="display: block;">
+              <div class="word-cloud">
+                <span class="word extreme">Binance referral bonus</span>
+                <span class="word high">passive income</span>
+                <span class="word medium">crypto trader</span>
+                <span class="word high">Binance vs OKX</span>
+                <span class="word low">affiliate marketing</span>
+                <span class="word medium">commission rates</span>
+                <span class="word extreme">referral program</span>
+                <span class="word low">cryptocurrency affiliate</span>
+                <span class="word medium">marketing tools</span>
+                <span class="word high">crypto affiliate</span>
+                <span class="word low">earn bitcoin</span>
+                <span class="word medium">trading affiliate</span>
+                <span class="word low">binance partner</span>
+                <span class="word high">high commission</span>
+              </div>
+              
+              <div class="word-cloud-legend">
+                <div class="legend-item">
+                  <div class="legend-color extreme"></div>
+                  <div class="legend-text">Extreme Growth (>80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color high"></div>
+                  <div class="legend-text">High Growth (40-80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color medium"></div>
+                  <div class="legend-text">Medium Growth (20-40%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color low"></div>
+                  <div class="legend-text">Steady Growth (5-20%)</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Timeline Container -->
+            <div class="timeline-container" id="timelineView" style="display: none;">
+              <div class="timeline">
+                <div class="timeline-header">
+                  <div>Topic</div>
+                  <div>Jan</div>
+                  <div>Feb</div>
+                  <div>Mar</div>
+                  <div>Apr</div>
+                  <div>May</div>
+                  <div>Jun</div>
+                </div>
+                
+                <div class="timeline-row extreme">
+                  <div class="topic">Binance referral bonus</div>
+                  <div class="month growth-low"></div>
+                  <div class="month growth-medium"></div>
+                  <div class="month growth-high"></div>
+                  <div class="month growth-extreme"></div>
+                  <div class="month growth-extreme"></div>
+                  <div class="month growth-extreme"></div>
+                </div>
+                
+                <div class="timeline-row high">
+                  <div class="topic">passive income</div>
+                  <div class="month growth-low"></div>
+                  <div class="month growth-low"></div>
+                  <div class="month growth-medium"></div>
+                  <div class="month growth-high"></div>
+                  <div class="month growth-high"></div>
+                  <div class="month growth-high"></div>
+                </div>
+                
+                <div class="timeline-row medium">
+                  <div class="topic">crypto trader</div>
+                  <div class="month growth-medium"></div>
+                  <div class="month growth-medium"></div>
+                  <div class="month growth-medium"></div>
+                  <div class="month growth-medium"></div>
+                  <div class="month growth-high"></div>
+                  <div class="month growth-medium"></div>
+                </div>
+                
+                <div class="timeline-row high">
+                  <div class="topic">Binance vs OKX</div>
+                  <div class="month growth-low"></div>
+                  <div class="month growth-medium"></div>
+                  <div class="month growth-high"></div>
+                  <div class="month growth-high"></div>
+                  <div class="month growth-high"></div>
+                  <div class="month growth-high"></div>
+                </div>
+              </div>
+              
+              <div class="timeline-legend">
+                <div class="legend-item">
+                  <div class="legend-color extreme"></div>
+                  <div class="legend-text">Extreme Growth (>80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color high"></div>
+                  <div class="legend-text">High Growth (40-80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color medium"></div>
+                  <div class="legend-text">Medium Growth (20-40%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color low"></div>
+                  <div class="legend-text">Steady Growth (5-20%)</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Bubble Chart Container -->
+            <div class="bubble-chart-container" id="bubblesView" style="display: none;">
+              <div class="bubble-chart">
+                <div class="bubble extreme" style="width: 120px; height: 120px; left: 20%; top: 30%;">
+                  <span>Binance referral bonus</span>
+                  <div class="growth">+92%</div>
+                </div>
+                <div class="bubble high" style="width: 100px; height: 100px; left: 50%; top: 20%;">
+                  <span>passive income</span>
+                  <div class="growth">+76%</div>
+                </div>
+                <div class="bubble medium" style="width: 80px; height: 80px; left: 70%; top: 40%;">
+                  <span>crypto trader</span>
+                  <div class="growth">+32%</div>
+                </div>
+                <div class="bubble high" style="width: 90px; height: 90px; left: 30%; top: 60%;">
+                  <span>Binance vs OKX</span>
+                  <div class="growth">+64%</div>
+                </div>
+                <div class="bubble low" style="width: 70px; height: 70px; left: 60%; top: 70%;">
+                  <span>affiliate marketing</span>
+                  <div class="growth">+18%</div>
+                </div>
+                <div class="bubble extreme" style="width: 110px; height: 110px; left: 80%; top: 60%;">
+                  <span>referral program</span>
+                  <div class="growth">+85%</div>
+                </div>
+              </div>
+              
+              <div class="bubble-legend">
+                <div class="legend-item">
+                  <div class="legend-color extreme"></div>
+                  <div class="legend-text">Extreme Growth (>80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color high"></div>
+                  <div class="legend-text">High Growth (40-80%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color medium"></div>
+                  <div class="legend-text">Medium Growth (20-40%)</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color low"></div>
+                  <div class="legend-text">Steady Growth (5-20%)</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Heat Map Container -->
+            <div class="heatmap-container" id="heatmapView" style="display: none;">
+              <div class="heatmap">
+                <div class="heatmap-header">
+                  <div>Topic</div>
+                  <div>Search Volume</div>
+                  <div>Social Mentions</div>
+                  <div>Affiliate Interest</div>
+                  <div>Growth</div>
+                </div>
+                
+                <div class="heatmap-row">
+                  <div class="heatmap-cell">Binance referral bonus</div>
+                  <div class="heatmap-cell extreme">Very High</div>
+                  <div class="heatmap-cell extreme">Very High</div>
+                  <div class="heatmap-cell extreme">Very High</div>
+                  <div class="heatmap-cell extreme">+92%</div>
+                </div>
+                
+                <div class="heatmap-row">
+                  <div class="heatmap-cell">passive income</div>
+                  <div class="heatmap-cell high">High</div>
+                  <div class="heatmap-cell high">High</div>
+                  <div class="heatmap-cell extreme">Very High</div>
+                  <div class="heatmap-cell high">+76%</div>
+                </div>
+                
+                <div class="heatmap-row">
+                  <div class="heatmap-cell">crypto trader</div>
+                  <div class="heatmap-cell medium">Medium</div>
+                  <div class="heatmap-cell high">High</div>
+                  <div class="heatmap-cell medium">Medium</div>
+                  <div class="heatmap-cell medium">+32%</div>
+                </div>
+                
+                <div class="heatmap-row">
+                  <div class="heatmap-cell">Binance vs OKX</div>
+                  <div class="heatmap-cell high">High</div>
+                  <div class="heatmap-cell medium">Medium</div>
+                  <div class="heatmap-cell high">High</div>
+                  <div class="heatmap-cell high">+64%</div>
+                </div>
+                
+                <div class="heatmap-row">
+                  <div class="heatmap-cell">affiliate marketing</div>
+                  <div class="heatmap-cell low">Low</div>
+                  <div class="heatmap-cell medium">Medium</div>
+                  <div class="heatmap-cell medium">Medium</div>
+                  <div class="heatmap-cell low">+18%</div>
+                </div>
+              </div>
+              
+              <div class="heatmap-legend">
+                <div class="legend-item">
+                  <div class="legend-color extreme"></div>
+                  <div class="legend-text">Very High</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color high"></div>
+                  <div class="legend-text">High</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color medium"></div>
+                  <div class="legend-text">Medium</div>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color low"></div>
+                  <div class="legend-text">Low</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Reviews Section -->
+          <div class="user-reviews">
+            <div class="section-header">
+              <h2><i class="fas fa-star"></i> <span data-i18n="userReviews">User Reviews</span></h2>
+              <a href="#" class="view-all-link" data-i18n="viewAllReviews">View all 243 reviews</a>
+            </div>
+            
+            <div class="reviews-summary">
+              <div class="average-rating">
+                <div class="rating-number">4.6</div>
+                <div class="rating-stars">★★★★★</div>
+                <div class="total-reviews" data-i18n="basedOnReviews">based on 243 reviews</div>
+              </div>
+              
+              <div class="rating-breakdown">
+                <div class="rating-bar-container">
+                  <div class="rating-label">5 ★</div>
+                  <div class="rating-bar-wrapper">
+                    <div class="rating-bar" style="width: 70%;"></div>
+                  </div>
+                  <div class="rating-count">170</div>
+                </div>
+                <div class="rating-bar-container">
+                  <div class="rating-label">4 ★</div>
+                  <div class="rating-bar-wrapper">
+                    <div class="rating-bar" style="width: 20%;"></div>
+                  </div>
+                  <div class="rating-count">48</div>
+                </div>
+                <div class="rating-bar-container">
+                  <div class="rating-label">3 ★</div>
+                  <div class="rating-bar-wrapper">
+                    <div class="rating-bar" style="width: 5%;"></div>
+                  </div>
+                  <div class="rating-count">12</div>
+                </div>
+                <div class="rating-bar-container">
+                  <div class="rating-label">2 ★</div>
+                  <div class="rating-bar-wrapper">
+                    <div class="rating-bar" style="width: 3%;"></div>
+                  </div>
+                  <div class="rating-count">8</div>
+                </div>
+                <div class="rating-bar-container">
+                  <div class="rating-label">1 ★</div>
+                  <div class="rating-bar-wrapper">
+                    <div class="rating-bar" style="width: 2%;"></div>
+                  </div>
+                  <div class="rating-count">5</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="reviews-list">
+              <!-- Review 1 -->
+              <div class="review-item">
+                <div class="review-user">
+                  <div class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T.">
+                  </div>
+                  <div class="user-info">
+                    <div class="user-name">Michael T. <span class="verified-badge">Verified Affiliate</span></div>
+                    <div class="review-date">Posted on May 15, 2023</div>
+                  </div>
+                </div>
+                <div class="review-content">
+                  <div class="review-rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="review-title">Best affiliate program I've worked with</div>
+                  </div>
+                  <div class="review-text">
+                    <p>What sets Binance apart is their lifetime commission structure. I still earn from users I referred back in 2021, which creates a truly passive income stream. Their marketing materials are comprehensive and regularly updated, which helps maintain conversion rates.</p>
+                    <p>The multi-tier referral system is also great for scaling - I've built a small team under me and it's significantly boosted my earnings. They've also been prompt in payments with no issues whatsoever.</p>
+                  </div>
+                  <div class="review-tags">
+                    <span class="review-tag">Passive Income</span>
+                    <span class="review-tag">Multi-tier</span>
+                    <span class="review-tag">Timely Payments</span>
+                  </div>
+                  <div class="review-metrics">
+                    <div class="earnings-metric">
+                      <span class="metric-label">Avg. Monthly Earnings:</span>
+                      <span class="metric-value">$4,700</span>
+                    </div>
+                    <div class="conversion-metric">
+                      <span class="metric-label">Conversion Rate:</span>
+                      <span class="metric-value">3.9%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="review-actions">
+                  <button class="helpful-btn"><i class="far fa-thumbs-up"></i> Helpful (41)</button>
+                  <button class="comment-btn"><i class="far fa-comment"></i> Comment (7)</button>
+                  <button class="report-btn"><i class="far fa-flag"></i> Report</button>
+                </div>
+              </div>
+
+              <!-- Review 2 -->
+              <div class="review-item">
+                <div class="review-user">
+                  <div class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah J.">
+                  </div>
+                  <div class="user-info">
+                    <div class="user-name">Sarah J. <span class="verified-badge">Verified Affiliate</span></div>
+                    <div class="review-date">Posted on June 3, 2023</div>
+                  </div>
+                </div>
+                <div class="review-content">
+                  <div class="review-rating">
+                    <div class="stars">★★★★★</div>
+                    <div class="review-title">Consistent earnings & excellent support</div>
+                  </div>
+                  <div class="review-text">
+                    <p>I've been a Binance affiliate for over 2 years and the experience has been consistently positive. What I appreciate most is their responsive support team - any issues get resolved within hours, not days.</p>
+                    <p>The analytics dashboard is comprehensive and helps me optimize my campaigns effectively. I'm seeing about 4.2% conversion rate which is well above industry average for crypto programs.</p>
+                  </div>
+                  <div class="review-tags">
+                    <span class="review-tag">Great Support</span>
+                    <span class="review-tag">Detailed Analytics</span>
+                    <span class="review-tag">High Conversion</span>
+                  </div>
+                  <div class="review-metrics">
+                    <div class="earnings-metric">
+                      <span class="metric-label">Avg. Monthly Earnings:</span>
+                      <span class="metric-value">$3,850</span>
+                    </div>
+                    <div class="conversion-metric">
+                      <span class="metric-label">Conversion Rate:</span>
+                      <span class="metric-value">4.2%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="review-actions">
+                  <button class="helpful-btn"><i class="far fa-thumbs-up"></i> Helpful (35)</button>
+                  <button class="comment-btn"><i class="far fa-comment"></i> Comment (5)</button>
+                  <button class="report-btn"><i class="far fa-flag"></i> Report</button>
+                </div>
+              </div>
+
+              <!-- Review 3 -->
+              <div class="review-item">
+                <div class="review-user">
+                  <div class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Michael J.">
+                  </div>
+                  <div class="user-info">
+                    <div class="user-name">David K. <span class="new-affiliate">New Affiliate</span></div>
+                    <div class="review-date">Posted on July 10, 2023</div>
+                  </div>
+                </div>
+                <div class="review-content">
+                  <div class="review-rating">
+                    <div class="stars">★★★☆☆</div>
+                    <div class="review-title">Good program but room for improvement</div>
+                  </div>
+                  <div class="review-text">
+                    <p>Binance's affiliate program is solid overall, and their commission rates are competitive. I've been able to generate a consistent side income promoting their platform to my blog audience. The unlimited cookie duration is a major plus.</p>
+                    <p>However, I've found their reporting tools could use some improvement - sometimes there's a delay in tracking conversions which makes performance monitoring challenging. Also, more educational resources for affiliates would be helpful, especially for those new to the crypto space.</p>
+                  </div>
+                  <div class="review-tags">
+                    <span class="review-tag">Competitive Rates</span>
+                    <span class="review-tag">Tracking Delays</span>
+                    <span class="review-tag">Needs Better Resources</span>
+                  </div>
+                  <div class="review-metrics">
+                    <div class="earnings-metric">
+                      <span class="metric-label">Avg. Monthly Earnings:</span>
+                      <span class="metric-value">$1,850</span>
+                    </div>
+                    <div class="conversion-metric">
+                      <span class="metric-label">Conversion Rate:</span>
+                      <span class="metric-value">2.8%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="review-actions">
+                  <button class="helpful-btn"><i class="far fa-thumbs-up"></i> Helpful (15)</button>
+                  <button class="comment-btn"><i class="far fa-comment"></i> Comment (2)</button>
+                  <button class="report-btn"><i class="far fa-flag"></i> Report</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="write-review-container">
+              <button class="write-review-btn" id="writeReviewBtn"><i class="fas fa-pen"></i> <span data-i18n="writeReview">Write a Review</span></button>
+            </div>
+          </div>
+
+          <!-- Case Studies Section -->
+          <div class="case-studies">
+            <div class="section-header">
+              <h2><i class="fas fa-trophy"></i> <span data-i18n="caseStudies">Success Stories</span></h2>
+              <a href="#" class="view-all-link" data-i18n="viewAllCases">View all case studies</a>
+            </div>
+            
+            <div class="case-studies-grid">
+              <!-- Case Study 1 -->
+              <div class="case-study-card">
+                <div class="case-badge crypto-blogger">Crypto Blogger</div>
+                <h4>How I Generated $12,500/month with Binance Affiliate</h4>
+                <div class="case-stats">
+                  <div class="case-stat">
+                    <i class="fas fa-chart-line"></i>
+                    <span>854% ROI</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-users"></i>
+                    <span>3.7% Conv. Rate</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>8 months</span>
+                  </div>
+                </div>
+                <p>Alex started a crypto blog in 2021 and focused on educational content for beginners. By creating detailed Binance tutorials and review content, he was able to build a steady stream of affiliate income that now generates over $12,500 monthly.</p>
+                <a href="#" class="case-link">Read Full Case Study <i class="fas fa-arrow-right"></i></a>
+              </div>
+              
+              <!-- Case Study 2 -->
+              <div class="case-study-card">
+                <div class="case-badge youtube-creator">YouTube Creator</div>
+                <h4>Scaling to $28K/month with Video Reviews</h4>
+                <div class="case-stats">
+                  <div class="case-stat">
+                    <i class="fas fa-chart-line"></i>
+                    <span>1,250% ROI</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-users"></i>
+                    <span>4.2% Conv. Rate</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>14 months</span>
+                  </div>
+                </div>
+                <p>Sarah built a YouTube channel focused on crypto trading strategies. By creating in-depth Binance platform tutorials and honest reviews, she grew her channel to 180K subscribers and now earns $28K monthly through Binance's affiliate program.</p>
+                <a href="#" class="case-link">Read Full Case Study <i class="fas fa-arrow-right"></i></a>
+              </div>
+              
+              <!-- Case Study 3 -->
+              <div class="case-study-card">
+                <div class="case-badge community-builder">Community Builder</div>
+                <h4>Building a $45K/month Affiliate Network</h4>
+                <div class="case-stats">
+                  <div class="case-stat">
+                    <i class="fas fa-chart-line"></i>
+                    <span>1,680% ROI</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-users"></i>
+                    <span>5.3% Conv. Rate</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>18 months</span>
+                  </div>
+                </div>
+                <p>Michael created a Discord community for crypto enthusiasts with educational resources, market analysis, and trading strategies. By leveraging Binance's tiered referral system, he built a network of sub-affiliates that generates over $45K in monthly commissions.</p>
+                <a href="#" class="case-link">Read Full Case Study <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <!-- Action Card -->
+          <section class="join-cta">
+            <h2>Ready to Join?</h2>
+            <p>Start earning up to 50% commission with Binance's affiliate program</p>
+            <a href="#" class="apply-btn">Apply Now</a>
+          </section>
+
+          <!-- Materials Card -->
+          <section class="marketing-materials">
+            <h2>Marketing Materials</h2>
+            <ul>
+              <li><a href="#"><i class="fas fa-images"></i> Banners & Images</a></li>
+              <li><a href="#"><i class="fas fa-file-alt"></i> Product Descriptions</a></li>
+              <li><a href="#"><i class="fas fa-code"></i> Text Links & Widgets</a></li>
+              <li><a href="#"><i class="fas fa-video"></i> Video Resources</a></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Affiliate Finder. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Demo login toggle (for demonstration only) -->
+  <div class="login-toggle">
+    <label>Login Status:</label>
+    <label class="toggle-switch">
+      <input type="checkbox" id="loginToggle">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <!-- JavaScript files -->
+  <script src="language.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // User login state (for demo purposes)
+      let isLoggedIn = false;
+      
+      // DOM Elements
+      const userStatus = document.getElementById('userStatus');
+      const userLoginToggle = document.getElementById('userLoginToggle');
+      const viewMoreSocialBtn = document.getElementById('viewMoreSocialBtn');
+      const loginModal = document.getElementById('loginModal');
+      const closeLoginModal = document.getElementById('closeLoginModal');
+      const loginBtn = document.getElementById('loginBtn');
+      const signupBtn = document.getElementById('signupBtn');
+      const hiddenContent = document.getElementById('hiddenContent');
+      
+      // Trending Topics display selector
+      const trendDisplaySelect = document.getElementById('trendDisplaySelect');
+      
+      // Xử lý chuyển đổi chế độ xem Trending Topics
+      if (trendDisplaySelect) {
+        trendDisplaySelect.addEventListener('change', function() {
+          // Ẩn tất cả các container
+          document.querySelectorAll('#tagsView, #wordcloudView, #timelineView, #bubblesView, #heatmapView').forEach(container => {
+            container.style.display = 'none';
+          });
+          
+          // Hiển thị container được chọn
+          const selectedView = this.value + 'View';
+          const viewContainer = document.getElementById(selectedView);
+          if (viewContainer) {
+            viewContainer.style.display = 'block';
+          }
+        });
+      }
+      
+      // Update UI based on login state
+      function updateLoginUI() {
+        const statusText = document.querySelector('.login-status');
+        const avatar = document.querySelector('.user-avatar');
+        
+        if (isLoggedIn) {
+          statusText.textContent = currentLanguage === 'en' ? 'User' : 'Người dùng';
+          avatar.textContent = 'U';
+          avatar.style.backgroundColor = '#3861fb';
+          
+          // Show hidden content
+          if (hiddenContent) {
+            hiddenContent.style.display = 'block';
+          }
+          
+          // Change View More button text
+          if (viewMoreSocialBtn) {
+            viewMoreSocialBtn.innerHTML = currentLanguage === 'en' 
+              ? 'No more content <i class="fas fa-check"></i>' 
+              : 'Không còn nội dung <i class="fas fa-check"></i>';
+            viewMoreSocialBtn.disabled = true;
+            viewMoreSocialBtn.style.opacity = '0.7';
+          }
+        } else {
+          statusText.textContent = currentLanguage === 'en' ? 'Guest' : 'Khách';
+          avatar.textContent = 'G';
+          avatar.style.backgroundColor = '#F0B90B';
+          
+          // Hide hidden content
+          if (hiddenContent) {
+            hiddenContent.style.display = 'none';
+          }
+          
+          // Reset View More button
+          if (viewMoreSocialBtn) {
+            const viewMoreText = document.querySelector('#viewMoreSocialBtn span');
+            if (viewMoreText) {
+              viewMoreText.textContent = currentLanguage === 'en' ? 'View More' : 'Xem thêm';
+            } else {
+              viewMoreSocialBtn.innerHTML = currentLanguage === 'en' 
+                ? '<i class="fas fa-plus-circle"></i> View More' 
+                : '<i class="fas fa-plus-circle"></i> Xem thêm';
+            }
+            viewMoreSocialBtn.disabled = false;
+            viewMoreSocialBtn.style.opacity = '1';
+          }
+        }
+      }
+      
+      // Toggle login state (demo only)
+      const loginToggle = document.getElementById('loginToggle');
+      if (loginToggle) {
+        loginToggle.addEventListener('change', function() {
+          isLoggedIn = this.checked;
+          updateLoginUI();
+        });
+      }
+      
+      // Social Listening Tabs
+      const socialTabs = document.querySelectorAll('.social-tab');
+      socialTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          // Remove active class from all tabs
+          socialTabs.forEach(t => t.classList.remove('active'));
+          
+          // Add active class to clicked tab
+          this.classList.add('active');
+          
+          // In a real implementation, this would switch between different platform content
+        });
+      });
+      
+      // Initialize language switcher
+      if (typeof initializeLanguageSwitcher === 'function') {
+        initializeLanguageSwitcher();
+      }
+      
+      // Initial UI update
+      updateLoginUI();
+      
+      // Khởi tạo hiển thị mặc định cho Trending Topics
+      const defaultView = 'wordcloudView';
+      document.querySelectorAll('#tagsView, #timelineView, #bubblesView, #heatmapView').forEach(container => {
+        container.style.display = 'none';
+      });
+      const defaultContainer = document.getElementById(defaultView);
+      if (defaultContainer) {
+        defaultContainer.style.display = 'block';
+      }
+    });
+  </script>
+
+  <!-- Add modern UI interaction script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Xử lý Social Listening tabs
+      const socialTabs = document.querySelectorAll('.social-tab');
+      if (socialTabs.length > 0) {
+        socialTabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            // Loại bỏ active class từ tất cả các tabs
+            socialTabs.forEach(t => t.classList.remove('active'));
+            
+            // Thêm active class cho tab được click
+            this.classList.add('active');
+            
+            // Trong thực tế, bạn sẽ thêm mã để hiển thị nội dung tương ứng
+            // Nhưng đây là một demo đơn giản
+          });
+        });
+      }
+      
+      // Xử lý nút View More
+      const viewMoreBtn = document.getElementById('viewMoreSocialBtn');
+      if (viewMoreBtn) {
+        viewMoreBtn.addEventListener('click', function() {
+          // Kiểm tra trạng thái đăng nhập
+          if (isLoggedIn) {
+            // Nếu đã đăng nhập, thay đổi nội dung nút
+            this.innerHTML = 'No more content <i class="fas fa-check"></i>';
+            this.disabled = true;
+            this.style.opacity = '0.7';
+          } else {
+            // Nếu chưa đăng nhập, hiển thị popup đăng nhập
+            document.getElementById('loginPopup').style.display = 'flex';
+          }
+        });
+      }
+      
+      // Xử lý đóng popup đăng nhập
+      const closeLoginPopup = document.getElementById('closeLoginPopup');
+      if (closeLoginPopup) {
+        closeLoginPopup.addEventListener('click', function() {
+          document.getElementById('loginPopup').style.display = 'none';
+        });
+      }
+      
+      // Đóng popup khi click ra ngoài
+      window.addEventListener('click', function(event) {
+        const loginPopup = document.getElementById('loginPopup');
+        if (event.target === loginPopup) {
+          loginPopup.style.display = 'none';
+        }
+      });
+      
+      // Xử lý hiệu ứng chỉ số xu hướng trong Top Keywords
+      const trendItems = document.querySelectorAll('.trend-up, .trend-down, .trend-neutral');
+      if (trendItems.length > 0) {
+        trendItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+            this.style.transition = 'transform 0.3s ease';
+          });
+          
+          item.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+          });
+        });
+      }
+      
+      // Thêm hiệu ứng click cho nút Apply Now
+      const applyBtn = document.querySelector('.apply-btn');
+      if (applyBtn) {
+        applyBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Tạo hiệu ứng ripple
+          const ripple = document.createElement('span');
+          ripple.style.position = 'absolute';
+          ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+          ripple.style.borderRadius = '50%';
+          ripple.style.width = '10px';
+          ripple.style.height = '10px';
+          ripple.style.transform = 'scale(0)';
+          ripple.style.animation = 'ripple 0.6s linear';
+          ripple.style.pointerEvents = 'none';
+          
+          // Vị trí click
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          
+          this.appendChild(ripple);
+          
+          // Xóa phần tử sau khi hoàn thành hiệu ứng
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      }
+      
+      // Thêm hiệu ứng cho các hàng trong bảng Similar Programs
+      const tableRows = document.querySelectorAll('.similar-programs tbody tr');
+      if (tableRows.length > 0) {
+        tableRows.forEach(row => {
+          row.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = 'rgba(240, 185, 11, 0.05)';
+            this.style.transform = 'translateY(-2px)';
+            this.style.transition = 'all 0.3s ease';
+            
+            // Làm nổi bật nút Visit
+            const visitBtn = this.querySelector('.visit-btn');
+            if (visitBtn) {
+              visitBtn.style.backgroundColor = '#3861fb';
+              visitBtn.style.color = 'white';
+            }
+          });
+          
+          row.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '';
+            this.style.transform = 'translateY(0)';
+            
+            // Khôi phục nút Visit
+            const visitBtn = this.querySelector('.visit-btn');
+            if (visitBtn) {
+              visitBtn.style.backgroundColor = 'rgba(56, 97, 251, 0.1)';
+              visitBtn.style.color = '#3861fb';
+            }
+          });
+        });
+      }
+      
+      // Thêm hiệu ứng cho các liên kết trong Marketing Materials
+      const marketingLinks = document.querySelectorAll('.marketing-materials a');
+      if (marketingLinks.length > 0) {
+        marketingLinks.forEach(link => {
+          link.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#f0b90b';
+            this.style.color = '#000';
+            this.style.transform = 'translateY(-3px)';
+            this.style.boxShadow = '0 5px 15px rgba(240, 185, 11, 0.2)';
+            this.style.transition = 'all 0.3s ease';
+            
+            // Thay đổi màu icon
+            const icon = this.querySelector('i');
+            if (icon) {
+              icon.style.color = '#000';
+            }
+          });
+          
+          link.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '#f8f9fa';
+            this.style.color = '#495057';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+            
+            // Khôi phục màu icon
+            const icon = this.querySelector('i');
+            if (icon) {
+              icon.style.color = '#f0b90b';
+            }
+          });
+        });
+      }
+      
+      // Thêm style cho keyframes ripple nếu chưa tồn tại
+      if (!document.querySelector('#rippleAnimation')) {
+        const style = document.createElement('style');
+        style.id = 'rippleAnimation';
+        style.textContent = `
+          @keyframes ripple {
+            0% {
+              transform: scale(0);
+              opacity: 1;
+            }
+            100% {
+              transform: scale(40);
+              opacity: 0;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // Chức năng hiển thị tooltip cho Social Content
+      const socialItems = document.querySelectorAll('.social-content-item');
+      if (socialItems.length > 0) {
+        socialItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
+            this.style.transition = 'all 0.3s ease';
+          });
+          
+          item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Add UI animation boost -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tăng cường trải nghiệm animation khi scroll
+      const animatedSections = document.querySelectorAll('.similar-programs, .join-cta, .marketing-materials, .top-keywords, .social-listening');
+      
+      if (animatedSections.length > 0) {
+        // Tạo IntersectionObserver để theo dõi khi các phần tử xuất hiện trong viewport
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Thêm class khi phần tử xuất hiện trong viewport
+              entry.target.classList.add('animate-in');
+              // Ngừng theo dõi phần tử sau khi đã hiển thị animation
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null, // viewport
+          threshold: 0.2, // trigger khi 20% phần tử xuất hiện
+          rootMargin: '0px'
+        });
+        
+        // Thêm style cho animation
+        const animationStyle = document.createElement('style');
+        animationStyle.textContent = `
+          .similar-programs, .join-cta, .marketing-materials, .top-keywords, .social-listening {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+          }
+          
+          .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+          }
+          
+          /* Đặt thời gian delay khác nhau cho từng phần tử */
+          .similar-programs { transition-delay: 0.1s; }
+          .join-cta { transition-delay: 0.2s; }
+          .marketing-materials { transition-delay: 0.3s; }
+          .top-keywords { transition-delay: 0.4s; }
+          .social-listening { transition-delay: 0.5s; }
+        `;
+        document.head.appendChild(animationStyle);
+        
+        // Đăng ký các phần tử để theo dõi
+        animatedSections.forEach(section => {
+          observer.observe(section);
+        });
+      }
+    });
+  </script>
+
+  <!-- Add case study interaction script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Xử lý tương tác với Case Study Cards
+      const caseStudyCards = document.querySelectorAll('.case-study-card');
+      if (caseStudyCards.length > 0) {
+        caseStudyCards.forEach(card => {
+          // Thêm hiệu ứng hover
+          card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px)';
+            this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.12)';
+            
+            // Thêm hiệu ứng cho nút đọc case study
+            const caseLink = this.querySelector('.case-link');
+            if (caseLink) {
+              caseLink.style.color = '#1a3fd0';
+            }
+            
+            // Thêm hiệu ứng cho gradient line trên đầu card
+            this.style.borderTop = '5px solid transparent';
+            this.style.borderImage = 'linear-gradient(90deg, #f0b90b 0%, #f8d12f 100%)';
+            this.style.borderImageSlice = '1';
+          });
+          
+          card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            
+            // Khôi phục style cho nút đọc case study
+            const caseLink = this.querySelector('.case-link');
+            if (caseLink) {
+              caseLink.style.color = '#3861fb';
+            }
+            
+            // Khôi phục border top
+            this.style.borderTop = '';
+            this.style.borderImage = '';
+          });
+          
+          // Hiệu ứng khi click vào case study card
+          card.addEventListener('click', function(e) {
+            // Nếu click vào link, để mặc định xử lý
+            if (e.target.closest('.case-link')) {
+              return;
+            }
+            
+            // Nếu click vào card, mở case study
+            const caseLink = this.querySelector('.case-link');
+            if (caseLink) {
+              caseLink.click();
+            }
+          });
+        });
+      }
+      
+      // Thêm hiệu ứng scroll animation cho Case Studies
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Thêm class khi phần tử xuất hiện trong viewport
+            entry.target.classList.add('animate-in');
+            // Ngừng theo dõi phần tử sau khi đã hiển thị animation
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null, // viewport
+        threshold: 0.2, // trigger khi 20% phần tử xuất hiện
+        rootMargin: '0px'
+      });
+      
+      // Đăng ký case studies để theo dõi
+      const caseStudiesSection = document.querySelector('.case-studies');
+      if (caseStudiesSection) {
+        observer.observe(caseStudiesSection);
+        
+        // Thêm style cho animation
+        const styleElement = document.createElement('style');
+        styleElement.textContent = `
+          .case-studies {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+          }
+          
+          .case-studies.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          
+          .case-studies.animate-in .case-study-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+          }
+          
+          .case-studies.animate-in .case-study-card:nth-child(1) {
+            animation-delay: 0.2s;
+          }
+          
+          .case-studies.animate-in .case-study-card:nth-child(2) {
+            animation-delay: 0.4s;
+          }
+          
+          .case-studies.animate-in .case-study-card:nth-child(3) {
+            animation-delay: 0.6s;
+          }
+          
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `;
+        document.head.appendChild(styleElement);
+      }
+    });
+  </script>
+
+  <!-- Similar Programs -->
+  <section class="similar-programs">
+    <h2><i class="fas fa-exchange-alt"></i> Similar Programs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Commission</th>
+          <th>Monthly Traffic</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><img src="../assets/coinbase-logo.png" alt="Coinbase Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> Coinbase Cryptocurrency Exchange</td>
+          <td>50% First 3 months</td>
+          <td>92.7M/mo</td>
+          <td><a href="#" class="visit-btn">Visit</a></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><img src="../assets/okx-logo.png" alt="OKX Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> OKX Cryptocurrency Exchange</td>
+          <td>40% Recurring commission</td>
+          <td>43.5M/mo</td>
+          <td><a href="#" class="visit-btn">Visit</a></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><img src="../assets/bybit-logo.png" alt="Bybit Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> Bybit Cryptocurrency Exchange</td>
+          <td>30% Lifetime commission</td>
+          <td>31.8M/mo</td>
+          <td><a href="#" class="visit-btn">Visit</a></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><img src="../assets/kucoin-logo.png" alt="KuCoin Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> KuCoin Cryptocurrency Exchange</td>
+          <td>40% Revenue share</td>
+          <td>25.4M/mo</td>
+          <td><a href="#" class="visit-btn">Visit</a></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><img src="../assets/crypto-logo.png" alt="Crypto.com Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> Crypto.com Exchange & Card</td>
+          <td>25-45% Tiered commission</td>
+          <td>19.2M/mo</td>
+          <td><a href="#" class="visit-btn">Visit</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 </body>
-</html> 
+
+<!-- Login Popup -->
+<div class="login-popup" id="loginPopup">
+  <div class="login-popup-content">
+    <span class="login-popup-close" id="closeLoginPopup">&times;</span>
+    <h3>Đăng nhập để xem thêm</h3>
+    <p>Để xem thêm nội dung về Social Listening, vui lòng đăng nhập hoặc đăng ký tài khoản miễn phí.</p>
+    <div class="login-popup-buttons">
+      <button class="login-popup-btn login-btn">Đăng nhập</button>
+      <button class="login-popup-btn register-btn">Đăng ký</button>
+    </div>
+  </div>
+</div>
+
+</html>
