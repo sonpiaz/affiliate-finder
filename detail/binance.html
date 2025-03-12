@@ -256,13 +256,12 @@
           </div>
           
           <!-- Top Keywords -->
-          <div class="top-keywords">
-            <div class="section-header">
-              <h2><i class="fas fa-key"></i> Top Keywords</h2>
-              <div class="date-range">Last 3 months</div>
-            </div>
-            
-            <table class="keywords-table">
+          <section class="top-keywords">
+            <h2>
+              <span><i class="fas fa-key"></i> Top Keywords</span>
+              <span class="time-period">Last 3 months</span>
+            </h2>
+            <table>
               <thead>
                 <tr>
                   <th>Rank</th>
@@ -275,201 +274,139 @@
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td>binance</td>
-                  <td>28.4M</td>
-                  <td>#1</td>
-                  <td><span class="trend-stable">—</span></td>
+                  <td class="keyword">binance</td>
+                  <td class="traffic">28.4M</td>
+                  <td><span class="position">#1</span></td>
+                  <td class="trend-neutral">―</td>
                 </tr>
                 <tr>
                   <td>2</td>
-                  <td>crypto exchange</td>
-                  <td>12.7M</td>
-                  <td>#2</td>
-                  <td><span class="trend-up">▲ 1</span></td>
+                  <td class="keyword">crypto exchange</td>
+                  <td class="traffic">12.7M</td>
+                  <td><span class="position">#2</span></td>
+                  <td class="trend-up">1</td>
                 </tr>
                 <tr>
                   <td>3</td>
-                  <td>buy bitcoin</td>
-                  <td>10.2M</td>
-                  <td>#3</td>
-                  <td><span class="trend-up">▲ 2</span></td>
+                  <td class="keyword">buy bitcoin</td>
+                  <td class="traffic">10.2M</td>
+                  <td><span class="position">#3</span></td>
+                  <td class="trend-up">2</td>
                 </tr>
                 <tr>
                   <td>4</td>
-                  <td>cryptocurrency trading</td>
-                  <td>7.8M</td>
-                  <td>#1</td>
-                  <td><span class="trend-down">▼ 1</span></td>
+                  <td class="keyword">cryptocurrency trading</td>
+                  <td class="traffic">7.8M</td>
+                  <td><span class="position">#1</span></td>
+                  <td class="trend-down">1</td>
                 </tr>
               </tbody>
             </table>
-          </div>
+          </section>
 
-          <!-- New Section: Social Listening -->
-          <div class="social-listening">
-            <div class="section-header">
-              <h2><i class="fas fa-broadcast-tower"></i> <span data-i18n="socialListening">Social Listening</span></h2>
-              <div class="date-range" data-i18n="lastUpdated">Last updated: 8 hours ago</div>
-            </div>
+          <!-- Social Listening -->
+          <section class="social-listening">
+            <h2>
+              <span><i class="fas fa-comments"></i> Social Listening</span>
+              <span class="last-updated">Last updated: 8 hours ago</span>
+            </h2>
             
             <div class="social-tabs">
-              <button class="social-tab active" data-platform="youtube"><i class="fab fa-youtube"></i> <span data-i18n="youtube">YouTube</span></button>
-              <button class="social-tab" data-platform="tiktok"><i class="fab fa-tiktok"></i> <span data-i18n="tiktok">TikTok</span></button>
-              <button class="social-tab" data-platform="twitter"><i class="fab fa-twitter"></i> <span data-i18n="twitter">X (Twitter)</span></button>
-              <button class="social-tab" data-platform="reddit"><i class="fab fa-reddit"></i> <span data-i18n="reddit">Reddit</span></button>
+              <div class="social-tab active"><i class="fab fa-youtube"></i> YouTube</div>
+              <div class="social-tab"><i class="fab fa-tiktok"></i> TikTok</div>
+              <div class="social-tab"><i class="fab fa-twitter"></i> X (Twitter)</div>
+              <div class="social-tab"><i class="fab fa-reddit"></i> Reddit</div>
             </div>
             
-            <div class="social-controls">
-              <div class="search-bar">
-                <input type="text" placeholder="Search content..." id="socialSearchInput" data-i18n-placeholder="searchContent">
-                <button><i class="fas fa-search"></i></button>
+            <div class="social-filters">
+              <div class="social-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search content...">
               </div>
-              
-              <div class="social-filters">
-                <select id="socialSortSelect">
-                  <option value="recent" data-i18n="mostRecent">Most Recent</option>
-                  <option value="popular" data-i18n="mostPopular">Most Popular</option>
-                  <option value="engagement" data-i18n="highestEngagement">Highest Engagement</option>
-                  <option value="sentiment" data-i18n="positiveSentiment">Positive Sentiment</option>
+              <div class="social-sort">
+                <select>
+                  <option selected>Most Recent</option>
+                  <option>Most Popular</option>
+                  <option>Highest Engagement</option>
                 </select>
               </div>
             </div>
             
-            <!-- Social Content Items -->
-            <div class="social-content" id="socialContent">
-              <!-- YouTube Content Item -->
-              <div class="social-item" data-platform="youtube">
-                <div class="social-item-thumbnail">
-                  <img src="https://i.ytimg.com/vi/oCX0_8YpbAI/maxresdefault.jpg" alt="Binance tutorial thumbnail">
-                  <span class="duration">12:45</span>
-                  <span class="platform-badge youtube"><i class="fab fa-youtube"></i></span>
+            <div class="social-content">
+              <div class="social-content-item">
+                <div class="social-content-thumbnail">
+                  <img src="../assets/video-thumbnail.jpg" alt="Binance Tutorial 2023">
                 </div>
-                <div class="social-item-content">
-                  <h3 class="social-item-title" data-i18n="youtubeTitle1">Binance Tutorial 2023: Complete Beginner's Guide to Trading Cryptocurrency</h3>
-                  <div class="social-item-creator">
-                    <span data-i18n="byCreator">By</span> Crypto Academy <i class="fas fa-check-circle verified"></i>
+                <div class="social-content-info">
+                  <h3 class="social-content-title">Binance Tutorial 2023: Complete Beginner's Guide to Trading Cryptocurrency</h3>
+                  <div class="social-content-creator">
+                    <i class="fas fa-user-circle"></i> By Crypto Academy <i class="fas fa-check-circle" style="color: #3861fb;"></i>
                   </div>
-                  <div class="social-item-stats">
-                    <span><i class="fas fa-eye"></i> 245K</span>
-                    <span><i class="fas fa-thumbs-up"></i> 18.2K</span>
-                    <span><i class="fas fa-comment"></i> 432</span>
-                    <span><i class="fas fa-calendar"></i> <span data-i18n="daysAgo">3 days ago</span></span>
+                  <div class="social-content-stats">
+                    <div class="social-content-stat"><i class="fas fa-eye"></i> 245K</div>
+                    <div class="social-content-stat"><i class="fas fa-thumbs-up"></i> 18.2K</div>
+                    <div class="social-content-stat"><i class="fas fa-comment"></i> 432</div>
+                    <div class="social-content-stat"><i class="fas fa-calendar-alt"></i> 3 days ago</div>
                   </div>
-                  <div class="social-item-sentiment very-positive" data-i18n="veryPositive">Very Positive</div>
-                </div>
-                <div class="social-item-action">
-                  <a href="https://www.youtube.com/watch?v=oCX0_8YpbAI" target="_blank" class="btn-outline"><i class="fas fa-play"></i> <span data-i18n="watch">Watch</span></a>
-                  <button class="btn-outline save-content"><i class="far fa-bookmark"></i> <span data-i18n="save">Save</span></button>
+                  <div class="social-content-sentiment sentiment-positive">Very Positive</div>
+                  <div class="social-actions">
+                    <button class="social-action-btn primary"><i class="fas fa-play"></i> Watch</button>
+                    <button class="social-action-btn"><i class="fas fa-bookmark"></i> Save</button>
+                  </div>
                 </div>
               </div>
               
-              <!-- TikTok Content Item -->
-              <div class="social-item" data-platform="tiktok">
-                <div class="social-item-thumbnail">
-                  <img src="https://i.insider.com/639a162bb7e7f2001294b223?width=700" alt="Binance TikTok thumbnail">
-                  <span class="duration">0:42</span>
-                  <span class="platform-badge tiktok"><i class="fab fa-tiktok"></i></span>
+              <div class="social-content-item">
+                <div class="social-content-thumbnail">
+                  <img src="../assets/video-thumbnail2.jpg" alt="Binance Affiliate Program">
                 </div>
-                <div class="social-item-content">
-                  <h3 class="social-item-title">5 Secrets to Maximize Binance Affiliate Earnings #crypto #affiliate</h3>
-                  <div class="social-item-creator">
-                    <span data-i18n="byCreator">By</span> CryptoCoach <i class="fas fa-check-circle verified"></i>
+                <div class="social-content-info">
+                  <h3 class="social-content-title">How I Made $5,000 in One Month with Binance Affiliate Program</h3>
+                  <div class="social-content-creator">
+                    <i class="fas fa-user-circle"></i> By Crypto Income <i class="fas fa-check-circle" style="color: #3861fb;"></i>
                   </div>
-                  <div class="social-item-stats">
-                    <span><i class="fas fa-eye"></i> 3.7M</span>
-                    <span><i class="fas fa-thumbs-up"></i> 592K</span>
-                    <span><i class="fas fa-comment"></i> 8.1K</span>
-                    <span><i class="fas fa-calendar"></i> 1 week ago</span>
+                  <div class="social-content-stats">
+                    <div class="social-content-stat"><i class="fas fa-eye"></i> 189K</div>
+                    <div class="social-content-stat"><i class="fas fa-thumbs-up"></i> 22.1K</div>
+                    <div class="social-content-stat"><i class="fas fa-comment"></i> 678</div>
+                    <div class="social-content-stat"><i class="fas fa-calendar-alt"></i> 1 week ago</div>
                   </div>
-                  <div class="social-item-sentiment very-positive">Very Positive</div>
-                </div>
-                <div class="social-item-action">
-                  <a href="https://www.tiktok.com/@binance" target="_blank" class="btn-outline"><i class="fas fa-play"></i> Watch</a>
-                  <button class="btn-outline save-content"><i class="far fa-bookmark"></i> Save</button>
+                  <div class="social-content-sentiment sentiment-positive">Very Positive</div>
+                  <div class="social-actions">
+                    <button class="social-action-btn primary"><i class="fas fa-play"></i> Watch</button>
+                    <button class="social-action-btn"><i class="fas fa-bookmark"></i> Save</button>
+                  </div>
                 </div>
               </div>
               
-              <!-- X(Twitter) Content Item -->
-              <div class="social-item" data-platform="twitter">
-                <div class="social-item-thumbnail">
-                  <img src="https://pbs.twimg.com/media/F2mlukwagAAsIsH?format=jpg&name=900x900" alt="X(Twitter) post thumbnail">
-                  <span class="platform-badge twitter"><i class="fab fa-twitter"></i></span>
+              <div class="social-content-item">
+                <div class="social-content-thumbnail">
+                  <img src="../assets/tiktok-thumbnail.jpg" alt="Binance TikTok">
                 </div>
-                <div class="social-item-content">
-                  <h3 class="social-item-title">Just earned my first $2,500 from Binance Affiliate Program! Here's how I did it 🧵</h3>
-                  <div class="social-item-creator">
-                    <span data-i18n="byCreator">By</span> @CryptoQueen <i class="fas fa-check-circle verified"></i>
+                <div class="social-content-info">
+                  <h3 class="social-content-title">3 Secrets to Maximize Your Binance Affiliate Earnings #crypto #binance #passive</h3>
+                  <div class="social-content-creator">
+                    <i class="fas fa-user-circle"></i> By CryptoTips <i class="fas fa-check-circle" style="color: #3861fb;"></i>
                   </div>
-                  <div class="social-item-stats">
-                    <span><i class="fas fa-retweet"></i> 2.4K</span>
-                    <span><i class="fas fa-heart"></i> 18.3K</span>
-                    <span><i class="fas fa-comment"></i> 782</span>
-                    <span><i class="fas fa-calendar"></i> 5 days ago</span>
+                  <div class="social-content-stats">
+                    <div class="social-content-stat"><i class="fas fa-eye"></i> 415K</div>
+                    <div class="social-content-stat"><i class="fas fa-heart"></i> 45.3K</div>
+                    <div class="social-content-stat"><i class="fas fa-comment"></i> 1.2K</div>
+                    <div class="social-content-stat"><i class="fas fa-calendar-alt"></i> 2 days ago</div>
                   </div>
-                  <div class="social-item-sentiment positive">Positive</div>
-                </div>
-                <div class="social-item-action">
-                  <a href="https://twitter.com/binance" target="_blank" class="btn-outline"><i class="fas fa-eye"></i> View</a>
-                  <button class="btn-outline save-content"><i class="far fa-bookmark"></i> Save</button>
-                </div>
-              </div>
-              
-              <!-- Reddit Content Item -->
-              <div class="social-item" data-platform="reddit">
-                <div class="social-item-thumbnail">
-                  <img src="https://preview.redd.it/i-did-an-in-depth-analysis-on-binances-token-bnb-using-v0-e5czb0clpzjc1.png?width=640&crop=smart&auto=webp&s=ce2dcf0b4bf7b5af1c7c2d88ff40714d4c43b5dd" alt="Reddit post thumbnail">
-                  <span class="platform-badge reddit"><i class="fab fa-reddit"></i></span>
-                </div>
-                <div class="social-item-content">
-                  <h3 class="social-item-title">[Guide] Complete Binance Affiliate Strategy for 2025 - How I make $5K/month consistently</h3>
-                  <div class="social-item-creator">
-                    <span data-i18n="byCreator">By</span> u/CryptoStrategist
+                  <div class="social-content-sentiment sentiment-positive">Very Positive</div>
+                  <div class="social-actions">
+                    <button class="social-action-btn primary"><i class="fas fa-play"></i> Watch</button>
+                    <button class="social-action-btn"><i class="fas fa-share-alt"></i> Share</button>
                   </div>
-                  <div class="social-item-stats">
-                    <span><i class="fas fa-arrow-up"></i> 4.2K</span>
-                    <span><i class="fas fa-comment"></i> 837</span>
-                    <span><i class="fas fa-award"></i> 12 Awards</span>
-                    <span><i class="fas fa-calendar"></i> 2 weeks ago</span>
-                  </div>
-                  <div class="social-item-sentiment very-positive">Very Positive</div>
-                </div>
-                <div class="social-item-action">
-                  <a href="https://www.reddit.com/r/binance/" target="_blank" class="btn-outline"><i class="fas fa-book-reader"></i> Read</a>
-                  <button class="btn-outline save-content"><i class="far fa-bookmark"></i> Save</button>
-                </div>
-              </div>
-              
-              <!-- YouTube Content Item 2 -->
-              <div class="social-item" data-platform="youtube">
-                <div class="social-item-thumbnail">
-                  <img src="https://i.ytimg.com/vi/KdJ26Fyd2Pw/maxresdefault.jpg" alt="YouTube video thumbnail">
-                  <span class="duration">15:32</span>
-                  <span class="platform-badge youtube"><i class="fab fa-youtube"></i></span>
-                </div>
-                <div class="social-item-content">
-                  <h3 class="social-item-title">Binance Affiliate Program Review 2025 - Better Than Coinbase?</h3>
-                  <div class="social-item-creator">
-                    <span data-i18n="byCreator">By</span> AffiliateInsider <i class="fas fa-check-circle verified"></i>
-                  </div>
-                  <div class="social-item-stats">
-                    <span><i class="fas fa-eye"></i> 725K</span>
-                    <span><i class="fas fa-thumbs-up"></i> 32K</span>
-                    <span><i class="fas fa-comment"></i> 1.4K</span>
-                    <span><i class="fas fa-calendar"></i> 1 month ago</span>
-                  </div>
-                  <div class="social-item-sentiment positive">Positive</div>
-                </div>
-                <div class="social-item-action">
-                  <a href="https://www.youtube.com/watch?v=KdJ26Fyd2Pw" target="_blank" class="btn-outline"><i class="fas fa-play"></i> Watch</a>
-                  <button class="btn-outline save-content"><i class="far fa-bookmark"></i> Save</button>
                 </div>
               </div>
             </div>
-
-            <div class="view-more-container">
-              <button id="viewMoreSocialBtn" class="view-more-btn"><i class="fas fa-plus-circle"></i> <span data-i18n="viewMore">View More</span></button>
+            
+            <div style="text-align: center; margin-top: 20px;">
+              <button id="viewMoreSocialBtn" class="btn primary"><i class="fas fa-plus-circle"></i> View More</button>
             </div>
-          </div>
+          </section>
 
           <!-- Trending Topics Section -->
           <div class="trending-topics">
@@ -949,11 +886,86 @@
             </div>
           </div>
 
-          <!-- Similar Programs -->
-          <div class="similar-programs">
-            <h2><i class="fas fa-exchange-alt"></i> Similar Programs</h2>
+          <!-- Case Studies Section -->
+          <div class="case-studies">
+            <div class="section-header">
+              <h2><i class="fas fa-trophy"></i> <span data-i18n="caseStudies">Success Stories</span></h2>
+              <a href="#" class="view-all-link" data-i18n="viewAllCases">View all case studies</a>
+            </div>
             
-            <table class="programs-table">
+            <div class="case-studies-grid">
+              <!-- Case Study 1 -->
+              <div class="case-study-card">
+                <div class="case-badge crypto-blogger">Crypto Blogger</div>
+                <h4>How I Generated $12,500/month with Binance Affiliate</h4>
+                <div class="case-stats">
+                  <div class="case-stat">
+                    <i class="fas fa-chart-line"></i>
+                    <span>854% ROI</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-users"></i>
+                    <span>3.7% Conv. Rate</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>8 months</span>
+                  </div>
+                </div>
+                <p>Alex started a crypto blog in 2021 and focused on educational content for beginners. By creating detailed Binance tutorials and review content, he was able to build a steady stream of affiliate income that now generates over $12,500 monthly.</p>
+                <a href="#" class="case-link">Read Full Case Study <i class="fas fa-arrow-right"></i></a>
+              </div>
+              
+              <!-- Case Study 2 -->
+              <div class="case-study-card">
+                <div class="case-badge youtube-creator">YouTube Creator</div>
+                <h4>Scaling to $28K/month with Video Reviews</h4>
+                <div class="case-stats">
+                  <div class="case-stat">
+                    <i class="fas fa-chart-line"></i>
+                    <span>1,250% ROI</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-users"></i>
+                    <span>4.2% Conv. Rate</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>14 months</span>
+                  </div>
+                </div>
+                <p>Sarah built a YouTube channel focused on crypto trading strategies. By creating in-depth Binance platform tutorials and honest reviews, she grew her channel to 180K subscribers and now earns $28K monthly through Binance's affiliate program.</p>
+                <a href="#" class="case-link">Read Full Case Study <i class="fas fa-arrow-right"></i></a>
+              </div>
+              
+              <!-- Case Study 3 -->
+              <div class="case-study-card">
+                <div class="case-badge community-builder">Community Builder</div>
+                <h4>Building a $45K/month Affiliate Network</h4>
+                <div class="case-stats">
+                  <div class="case-stat">
+                    <i class="fas fa-chart-line"></i>
+                    <span>1,680% ROI</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-users"></i>
+                    <span>5.3% Conv. Rate</span>
+                  </div>
+                  <div class="case-stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>18 months</span>
+                  </div>
+                </div>
+                <p>Michael created a Discord community for crypto enthusiasts with educational resources, market analysis, and trading strategies. By leveraging Binance's tiered referral system, he built a network of sub-affiliates that generates over $45K in monthly commissions.</p>
+                <a href="#" class="case-link">Read Full Case Study <i class="fas fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Similar Programs -->
+          <section class="similar-programs">
+            <h2><i class="fas fa-exchange-alt"></i> Similar Programs</h2>
+            <table>
               <thead>
                 <tr>
                   <th>#</th>
@@ -966,93 +978,48 @@
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td>
-                    <div class="program-name">
-                      <div class="mini-logo">
-                        <img src="https://assets.coinbase.com/assets/favicon.ico" alt="Coinbase Logo">
-                      </div>
-                      <div>
-                        <span class="name">Coinbase</span>
-                        <span class="category">Cryptocurrency Exchange</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="commission">
-                      <span class="amount">50%</span>
-                      <span class="type">First 3 months</span>
-                    </div>
-                  </td>
+                  <td><img src="../assets/coinbase-logo.png" alt="Coinbase Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> Coinbase Cryptocurrency Exchange</td>
+                  <td>50% First 3 months</td>
                   <td>92.7M/mo</td>
                   <td><a href="#" class="visit-btn">Visit</a></td>
                 </tr>
                 <tr>
                   <td>2</td>
-                  <td>
-                    <div class="program-name">
-                      <div class="mini-logo">
-                        <img src="https://www.okx.com/favicon.ico" alt="OKX Logo">
-                      </div>
-                      <div>
-                        <span class="name">OKX</span>
-                        <span class="category">Cryptocurrency Exchange</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="commission">
-                      <span class="amount">40%</span>
-                      <span class="type">Recurring commission</span>
-                    </div>
-                  </td>
+                  <td><img src="../assets/okx-logo.png" alt="OKX Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> OKX Cryptocurrency Exchange</td>
+                  <td>40% Recurring commission</td>
                   <td>43.5M/mo</td>
                   <td><a href="#" class="visit-btn">Visit</a></td>
                 </tr>
                 <tr>
                   <td>3</td>
-                  <td>
-                    <div class="program-name">
-                      <div class="mini-logo">
-                        <img src="https://www.bybit.com/favicon.ico" alt="Bybit Logo">
-                      </div>
-                      <div>
-                        <span class="name">Bybit</span>
-                        <span class="category">Cryptocurrency Exchange</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="commission">
-                      <span class="amount">30%</span>
-                      <span class="type">Lifetime commission</span>
-                    </div>
-                  </td>
+                  <td><img src="../assets/bybit-logo.png" alt="Bybit Logo" width="30" height="30" style="vertical-align: middle; margin-right: 10px;"> Bybit Cryptocurrency Exchange</td>
+                  <td>30% Lifetime commission</td>
                   <td>31.8M/mo</td>
                   <td><a href="#" class="visit-btn">Visit</a></td>
                 </tr>
               </tbody>
             </table>
-          </div>
+          </section>
         </div>
 
         <div class="sidebar">
           <!-- Action Card -->
-          <div class="action-card">
-            <h3>Ready to Join?</h3>
+          <section class="join-cta">
+            <h2>Ready to Join?</h2>
             <p>Start earning up to 50% commission with Binance's affiliate program</p>
-            <a href="https://www.binance.com/en/activity/referral" target="_blank" class="btn primary full-width">Apply Now</a>
-          </div>
+            <a href="#" class="apply-btn">Apply Now</a>
+          </section>
 
           <!-- Materials Card -->
-          <div class="materials-card">
-            <h3>Marketing Materials</h3>
-            <ul class="materials-list">
-              <li><i class="fas fa-image"></i> <a href="#">Banners & Images</a></li>
-              <li><i class="fas fa-file-alt"></i> <a href="#">Product Descriptions</a></li>
-              <li><i class="fas fa-code"></i> <a href="#">Text Links & Widgets</a></li>
-              <li><i class="fas fa-video"></i> <a href="#">Video Resources</a></li>
+          <section class="marketing-materials">
+            <h2>Marketing Materials</h2>
+            <ul>
+              <li><a href="#"><i class="fas fa-images"></i> Banners & Images</a></li>
+              <li><a href="#"><i class="fas fa-file-alt"></i> Product Descriptions</a></li>
+              <li><a href="#"><i class="fas fa-code"></i> Text Links & Widgets</a></li>
+              <li><a href="#"><i class="fas fa-video"></i> Video Resources</a></li>
             </ul>
-          </div>
+          </section>
         </div>
       </div>
     </div>
@@ -1201,6 +1168,366 @@
       }
     });
   </script>
+
+  <!-- Add modern UI interaction script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Xử lý Social Listening tabs
+      const socialTabs = document.querySelectorAll('.social-tab');
+      if (socialTabs.length > 0) {
+        socialTabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            // Loại bỏ active class từ tất cả các tabs
+            socialTabs.forEach(t => t.classList.remove('active'));
+            
+            // Thêm active class cho tab được click
+            this.classList.add('active');
+            
+            // Trong thực tế, bạn sẽ thêm mã để hiển thị nội dung tương ứng
+            // Nhưng đây là một demo đơn giản
+          });
+        });
+      }
+      
+      // Xử lý nút View More
+      const viewMoreBtn = document.getElementById('viewMoreSocialBtn');
+      if (viewMoreBtn) {
+        viewMoreBtn.addEventListener('click', function() {
+          // Trong tình huống thực tế, bạn sẽ tải thêm nội dung
+          // Trong demo này, chúng ta chỉ thay đổi text
+          this.innerHTML = 'No more content <i class="fas fa-check"></i>';
+          this.disabled = true;
+          this.style.opacity = '0.7';
+        });
+      }
+      
+      // Xử lý hiệu ứng chỉ số xu hướng trong Top Keywords
+      const trendItems = document.querySelectorAll('.trend-up, .trend-down, .trend-neutral');
+      if (trendItems.length > 0) {
+        trendItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+            this.style.transition = 'transform 0.3s ease';
+          });
+          
+          item.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+          });
+        });
+      }
+      
+      // Thêm hiệu ứng click cho nút Apply Now
+      const applyBtn = document.querySelector('.apply-btn');
+      if (applyBtn) {
+        applyBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Tạo hiệu ứng ripple
+          const ripple = document.createElement('span');
+          ripple.style.position = 'absolute';
+          ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+          ripple.style.borderRadius = '50%';
+          ripple.style.width = '10px';
+          ripple.style.height = '10px';
+          ripple.style.transform = 'scale(0)';
+          ripple.style.animation = 'ripple 0.6s linear';
+          ripple.style.pointerEvents = 'none';
+          
+          // Vị trí click
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          
+          this.appendChild(ripple);
+          
+          // Xóa phần tử sau khi hoàn thành hiệu ứng
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      }
+      
+      // Thêm hiệu ứng cho các hàng trong bảng Similar Programs
+      const tableRows = document.querySelectorAll('.similar-programs tbody tr');
+      if (tableRows.length > 0) {
+        tableRows.forEach(row => {
+          row.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = 'rgba(240, 185, 11, 0.05)';
+            this.style.transform = 'translateY(-2px)';
+            this.style.transition = 'all 0.3s ease';
+            
+            // Làm nổi bật nút Visit
+            const visitBtn = this.querySelector('.visit-btn');
+            if (visitBtn) {
+              visitBtn.style.backgroundColor = '#3861fb';
+              visitBtn.style.color = 'white';
+            }
+          });
+          
+          row.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '';
+            this.style.transform = 'translateY(0)';
+            
+            // Khôi phục nút Visit
+            const visitBtn = this.querySelector('.visit-btn');
+            if (visitBtn) {
+              visitBtn.style.backgroundColor = 'rgba(56, 97, 251, 0.1)';
+              visitBtn.style.color = '#3861fb';
+            }
+          });
+        });
+      }
+      
+      // Thêm hiệu ứng cho các liên kết trong Marketing Materials
+      const marketingLinks = document.querySelectorAll('.marketing-materials a');
+      if (marketingLinks.length > 0) {
+        marketingLinks.forEach(link => {
+          link.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#f0b90b';
+            this.style.color = '#000';
+            this.style.transform = 'translateY(-3px)';
+            this.style.boxShadow = '0 5px 15px rgba(240, 185, 11, 0.2)';
+            this.style.transition = 'all 0.3s ease';
+            
+            // Thay đổi màu icon
+            const icon = this.querySelector('i');
+            if (icon) {
+              icon.style.color = '#000';
+            }
+          });
+          
+          link.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '#f8f9fa';
+            this.style.color = '#495057';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+            
+            // Khôi phục màu icon
+            const icon = this.querySelector('i');
+            if (icon) {
+              icon.style.color = '#f0b90b';
+            }
+          });
+        });
+      }
+      
+      // Thêm style cho keyframes ripple nếu chưa tồn tại
+      if (!document.querySelector('#rippleAnimation')) {
+        const style = document.createElement('style');
+        style.id = 'rippleAnimation';
+        style.textContent = `
+          @keyframes ripple {
+            0% {
+              transform: scale(0);
+              opacity: 1;
+            }
+            100% {
+              transform: scale(40);
+              opacity: 0;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // Chức năng hiển thị tooltip cho Social Content
+      const socialItems = document.querySelectorAll('.social-content-item');
+      if (socialItems.length > 0) {
+        socialItems.forEach(item => {
+          item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
+            this.style.transition = 'all 0.3s ease';
+          });
+          
+          item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Add UI animation boost -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tăng cường trải nghiệm animation khi scroll
+      const animatedSections = document.querySelectorAll('.similar-programs, .join-cta, .marketing-materials, .top-keywords, .social-listening');
+      
+      if (animatedSections.length > 0) {
+        // Tạo IntersectionObserver để theo dõi khi các phần tử xuất hiện trong viewport
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Thêm class khi phần tử xuất hiện trong viewport
+              entry.target.classList.add('animate-in');
+              // Ngừng theo dõi phần tử sau khi đã hiển thị animation
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null, // viewport
+          threshold: 0.2, // trigger khi 20% phần tử xuất hiện
+          rootMargin: '0px'
+        });
+        
+        // Thêm style cho animation
+        const animationStyle = document.createElement('style');
+        animationStyle.textContent = `
+          .similar-programs, .join-cta, .marketing-materials, .top-keywords, .social-listening {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+          }
+          
+          .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+          }
+          
+          /* Đặt thời gian delay khác nhau cho từng phần tử */
+          .similar-programs { transition-delay: 0.1s; }
+          .join-cta { transition-delay: 0.2s; }
+          .marketing-materials { transition-delay: 0.3s; }
+          .top-keywords { transition-delay: 0.4s; }
+          .social-listening { transition-delay: 0.5s; }
+        `;
+        document.head.appendChild(animationStyle);
+        
+        // Đăng ký các phần tử để theo dõi
+        animatedSections.forEach(section => {
+          observer.observe(section);
+        });
+      }
+    });
+  </script>
+
+  <!-- Add case study interaction script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Xử lý tương tác với Case Study Cards
+      const caseStudyCards = document.querySelectorAll('.case-study-card');
+      if (caseStudyCards.length > 0) {
+        caseStudyCards.forEach(card => {
+          // Thêm hiệu ứng hover
+          card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px)';
+            this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.12)';
+            
+            // Thêm hiệu ứng cho nút đọc case study
+            const caseLink = this.querySelector('.case-link');
+            if (caseLink) {
+              caseLink.style.color = '#1a3fd0';
+            }
+            
+            // Thêm hiệu ứng cho gradient line trên đầu card
+            this.style.borderTop = '5px solid transparent';
+            this.style.borderImage = 'linear-gradient(90deg, #f0b90b 0%, #f8d12f 100%)';
+            this.style.borderImageSlice = '1';
+          });
+          
+          card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            
+            // Khôi phục style cho nút đọc case study
+            const caseLink = this.querySelector('.case-link');
+            if (caseLink) {
+              caseLink.style.color = '#3861fb';
+            }
+            
+            // Khôi phục border top
+            this.style.borderTop = '';
+            this.style.borderImage = '';
+          });
+          
+          // Hiệu ứng khi click vào case study card
+          card.addEventListener('click', function(e) {
+            // Nếu click vào link, để mặc định xử lý
+            if (e.target.closest('.case-link')) {
+              return;
+            }
+            
+            // Nếu click vào card, mở case study
+            const caseLink = this.querySelector('.case-link');
+            if (caseLink) {
+              caseLink.click();
+            }
+          });
+        });
+      }
+      
+      // Thêm hiệu ứng scroll animation cho Case Studies
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Thêm class khi phần tử xuất hiện trong viewport
+            entry.target.classList.add('animate-in');
+            // Ngừng theo dõi phần tử sau khi đã hiển thị animation
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: null, // viewport
+        threshold: 0.2, // trigger khi 20% phần tử xuất hiện
+        rootMargin: '0px'
+      });
+      
+      // Đăng ký case studies để theo dõi
+      const caseStudiesSection = document.querySelector('.case-studies');
+      if (caseStudiesSection) {
+        observer.observe(caseStudiesSection);
+        
+        // Thêm style cho animation
+        const styleElement = document.createElement('style');
+        styleElement.textContent = `
+          .case-studies {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+          }
+          
+          .case-studies.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          
+          .case-studies.animate-in .case-study-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+          }
+          
+          .case-studies.animate-in .case-study-card:nth-child(1) {
+            animation-delay: 0.2s;
+          }
+          
+          .case-studies.animate-in .case-study-card:nth-child(2) {
+            animation-delay: 0.4s;
+          }
+          
+          .case-studies.animate-in .case-study-card:nth-child(3) {
+            animation-delay: 0.6s;
+          }
+          
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `;
+        document.head.appendChild(styleElement);
+      }
+    });
+  </script>
 </body>
-</html> // Thêm một dòng comment mới
-/* JS cải tiến mới */
+</html>
